@@ -192,7 +192,7 @@
             margin-bottom: calc(var(--spacing-section) * 0.7);
         }
 
-        #work .section-header { margin-bottom: var(--spacing-section); }
+        #work .section-header { margin-bottom: 2rem; }
 
         .section-subtitle {
             color: var(--neon-accent);
@@ -420,6 +420,41 @@
         /* ==========================================================================
            7. PORTFOLIO SECTION
            ========================================================================== */
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            padding: 0.6rem 1.5rem;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 30px;
+            transition: color 0.3s, border-color 0.3s, background-color 0.3s;
+            cursor: none; 
+            background: var(--bg-surface);
+        }
+
+        .filter-btn:hover, .filter-btn:focus-visible {
+            color: var(--text-main);
+            border-color: rgba(255, 0, 85, 0.3);
+        }
+
+        .filter-btn.active {
+            color: var(--text-main);
+            border-color: var(--neon-accent);
+            background: rgba(255, 0, 85, 0.1);
+        }
+
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -758,6 +793,10 @@
             .hero-title.outline { font-size: 8vw; margin-top: 0.5rem; -webkit-text-stroke: 1px rgba(244, 244, 244, 0.8); }
 
             .services-grid { grid-template-columns: 1fr; }
+            
+            .portfolio-filters { gap: 0.5rem; margin-bottom: 2.5rem; }
+            .filter-btn { font-size: 0.75rem; padding: 0.5rem 1rem; }
+
             .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
             
             .project-card { margin-bottom: 0.5rem; }
@@ -938,6 +977,14 @@
                 <span class="section-subtitle">Selected Work</span>
                 <h2 class="section-title">Portfolio</h2>
             </div>
+            
+            <!-- Category Navigation -->
+            <ul class="portfolio-filters" id="portfolioFilters">
+                <li><button class="filter-btn active" data-filter="All">All</button></li>
+                <li><button class="filter-btn" data-filter="Flyers">Flyers</button></li>
+                <li><button class="filter-btn" data-filter="Storytelling">Storytelling</button></li>
+                <li><button class="filter-btn" data-filter="Side Projects">Side Projects</button></li>
+            </ul>
 
             <div class="portfolio-grid" id="portfolioGrid" role="list">
                 <!-- Javascript will inject projects here -->
@@ -1025,14 +1072,108 @@
          JAVASCRIPT LOGIC
          ========================================================================== -->
     <script>
+        // ==========================================================================
+        // PROJECTS — EDIT YOUR PROJECTS HERE
+        // ==========================================================================
+        // To add a new project, copy an existing block below, paste it, and change the values.
+        // 'category' must be exactly: "Flyers", "Storytelling", or "Side Projects".
+        // Aspect ratio is calculated automatically using the 'width' and 'height'.
+        // To change a thumbnail, edit the "thumb" URL. If you remove the "thumb" line entirely, 
+        // the website will gracefully fall back to extracting a video frame for you.
+
         const projects = [
-            { id: 'p1', title: "TOQUEL FLYER", thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/Toquel_V22_wystxs.webp", videoSrc: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036528/Toquel_V22_dpuuw0.webm", ratio: "4/5" },
-            { id: 'p2', title: "Brand", thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/new_logo_fr_ghuqgq.webp", videoSrc: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/new_logo_fr_ghuqgq.webp", ratio: "4/5" },
-            { id: 'p3', title: "Club Flyer", thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786143236/JOJO_shznqv.webp", videoSrc: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786143216/JoJo_sme8it.webm", ratio: "4/5" },
-            { id: 'p4', title: "DJ NAMAR flyer", thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036515/DJ_Namar_q0qgbe.webp", videoSrc: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036605/DJ_Namar_u3p9ut.webm", ratio: "4/5" },
-            { id: 'p5', title: "trapper promo", thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/Tony_Montana_Light_zhyiso.webp", videoSrc: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036541/Tony_Montana_II_2026_lnqgfc.webm", ratio: "1/1" },
-            { id: 'p6', title: "DJ flyer", thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036519/DJ_SANDA_e7squm.webp", videoSrc: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036664/DJ_Sanda_kp27zq.webm", ratio: "4/5" }
+            {
+                id: "p1",
+                name: "TOQUEL FLYER",
+                category: "Flyers",
+                width: 4,
+                height: 5,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/Toquel_V22_wystxs.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036528/Toquel_V22_dpuuw0.webm"
+            },
+            {
+                id: "p3",
+                name: "Club Flyer",
+                category: "Flyers",
+                width: 4,
+                height: 5,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036519/JOJO_shznqv.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036604/JoJo_sme8it.webm"
+            },
+            {
+                id: "p4",
+                name: "DJ NAMAR flyer",
+                category: "Flyers",
+                width: 4,
+                height: 5,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036515/DJ_Namar_q0qgbe.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036605/DJ_Namar_u3p9ut.webm"
+            },
+            {
+                id: "p5",
+                name: "trapper promo",
+                category: "Flyers",
+                width: 1,
+                height: 1,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/Tony_Montana_Light_zhyiso.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036541/Tony_Montana_II_2026_lnqgfc.webm"
+            },
+            {
+                id: "p6",
+                name: "DJ flyer",
+                category: "Flyers",
+                width: 4,
+                height: 5,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036519/DJ_SANDA_e7squm.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036664/DJ_Sanda_kp27zq.webm"
+            },
+            {
+                id: "car-edit",
+                name: "Car Edit",
+                category: "Side Projects",
+                width: 1080,
+                height: 1920,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225628/Car_edit_wzbihz.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786223113/Dark_Thoughts_c70kdi.webm"
+            },
+            {
+                id: "mustang-edit",
+                name: "Mustang Edit",
+                category: "Side Projects",
+                width: 1080,
+                height: 1920,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225632/Mustang_dejgga.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786222487/mustang_final_ci2ioi.webm"
+            },
+            {
+                id: "f1-edit",
+                name: "F1 Edit",
+                category: "Side Projects",
+                width: 1920,
+                height: 1080,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225631/F1_zr6kro.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786222276/f1_mist_edit_sbaql1.webm"
+            },
+            {
+                id: "kafouros",
+                name: "Kafouros",
+                category: "Storytelling",
+                width: 1080,
+                height: 1920,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225632/Kafouros_1_sn2a0t.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786223047/kafouros2_ovqvob.webm"
+            },
+            {
+                id: "kafouros-2",
+                name: "Kafouros 2",
+                category: "Storytelling",
+                width: 1080,
+                height: 1920,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225631/Kafouros_2_rbjbfe.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786223041/kafouros_ifhhxn.webm"
+            }
         ];
+        // ==========================================================================
 
         document.addEventListener("DOMContentLoaded", () => {
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1108,60 +1249,108 @@
                 });
             }
 
-            // 3. Render Portfolio Grid
+            // 3. Render Portfolio Grid & Category Logic
             const grid = document.getElementById('portfolioGrid');
-            grid.innerHTML = projects.map((p, index) => {
-                const isImage = p.id === 'p2' || p.videoSrc.match(/\.(webp|jpg|jpeg|png|gif)$/i);
-                return `
-                    <div class="project-card hover-target ${!isImage ? 'has-video' : ''}" role="listitem" tabindex="0" style="aspect-ratio: ${p.ratio};" data-index="${index}" data-type="${isImage ? 'image' : 'video'}">
-                        <div class="project-media">
-                            <img src="${p.thumb}" alt="Thumbnail for ${p.title}" loading="lazy" decoding="async">
-                            ${!isImage ? `<video data-src="${p.videoSrc}" loop muted playsinline preload="none"></video>` : ''}
-                        </div>
-                        <div class="project-info">
-                            <h3 class="project-title">${p.title}</h3>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            let currentFilteredProjects = projects;
+            let hasAnimatedGrid = false;
 
-            if (!prefersReducedMotion) {
-                gsap.fromTo(grid.children, 
-                    { y: 50, opacity: 0 },
-                    { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: grid, start: "top 85%" } }
-                );
+            function attachCardListeners() {
+                document.querySelectorAll('.project-card').forEach(card => {
+                    const index = parseInt(card.getAttribute('data-index'), 10);
+                    const type = card.getAttribute('data-type');
+                    
+                    card.addEventListener('click', (e) => { e.preventDefault(); openModal(index); });
+                    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(index); }});
+                    
+                    card.addEventListener('mouseenter', () => {
+                        if (isTouchDevice || mIsMobile) return; 
+                        if (cursor) {
+                            if (type === 'video') cursor.classList.add('hover-video');
+                            else cursor.classList.add('hover-active'); 
+                        }
+                        if (type === 'video') {
+                            const video = card.querySelector('video');
+                            if (video) {
+                                if (!video.getAttribute('src')) video.setAttribute('src', video.getAttribute('data-src'));
+                                if (video.paused) video.play().catch(() => {});
+                            }
+                        }
+                    });
+
+                    card.addEventListener('mouseleave', () => {
+                        if (isTouchDevice || mIsMobile) return; 
+                        if (cursor) { cursor.classList.remove('hover-video'); cursor.classList.remove('hover-active'); }
+                        if (type === 'video') {
+                            const video = card.querySelector('video');
+                            if (video && !video.paused) { video.pause(); video.currentTime = 0; }
+                        }
+                    });
+                });
             }
 
-            // Desktop Hover Previews
-            document.querySelectorAll('.project-card').forEach(card => {
-                const index = parseInt(card.getAttribute('data-index'), 10);
-                const type = card.getAttribute('data-type');
+            function renderProjects(filter = "All") {
+                currentFilteredProjects = filter === "All" ? projects : projects.filter(p => p.category === filter);
                 
-                card.addEventListener('click', (e) => { e.preventDefault(); openModal(index); });
-                card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(index); }});
-                
-                card.addEventListener('mouseenter', () => {
-                    if (isTouchDevice || mIsMobile) return; 
-                    if (cursor) {
-                        if (type === 'video') cursor.classList.add('hover-video');
-                        else cursor.classList.add('hover-active'); 
-                    }
-                    if (type === 'video') {
-                        const video = card.querySelector('video');
-                        if (video) {
-                            if (!video.src) video.src = video.getAttribute('data-src');
-                            if (video.paused) video.play().catch(() => {});
+                grid.innerHTML = currentFilteredProjects.map((p, index) => {
+                    const isImage = p.id === 'p2' || (p.video && p.video.match(/\.(webp|jpg|jpeg|png|gif)(\?.*)?$/i));
+                    const ratio = `${p.width}/${p.height}`;
+                    
+                    const thumbHtml = p.thumb ? `<img src="${p.thumb}" alt="Thumbnail for ${p.name}" loading="lazy" decoding="async">` : '';
+                    const fallbackImgHtml = (isImage && !p.thumb) ? `<img src="${p.video}" alt="${p.name}" loading="lazy">` : '';
+                    
+                    let videoHtml = '';
+                    if (!isImage && p.video) {
+                        if (p.thumb) {
+                            videoHtml = `<video data-src="${p.video}" loop muted playsinline preload="none"></video>`;
+                        } else {
+                            // If no thumbnail, use video frame at 0.1s as thumbnail and make it visible
+                            videoHtml = `<video src="${p.video}#t=0.1" data-src="${p.video}" loop muted playsinline preload="metadata" style="opacity: 1;"></video>`;
                         }
                     }
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    if (isTouchDevice || mIsMobile) return; 
-                    if (cursor) { cursor.classList.remove('hover-video'); cursor.classList.remove('hover-active'); }
-                    if (type === 'video') {
-                        const video = card.querySelector('video');
-                        if (video && !video.paused) { video.pause(); video.currentTime = 0; }
+                    
+                    return `
+                        <div class="project-card hover-target ${!isImage ? 'has-video' : ''}" role="listitem" tabindex="0" style="aspect-ratio: ${ratio};" data-index="${index}" data-type="${isImage ? 'image' : 'video'}">
+                            <div class="project-media">
+                                ${thumbHtml}
+                                ${fallbackImgHtml}
+                                ${videoHtml}
+                            </div>
+                            <div class="project-info">
+                                <h3 class="project-title">${p.name}</h3>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                attachCardListeners();
+                
+                if (!prefersReducedMotion) {
+                    if (!hasAnimatedGrid) {
+                        gsap.fromTo(grid.children, 
+                            { y: 50, opacity: 0 },
+                            { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: grid, start: "top 85%" } }
+                        );
+                        hasAnimatedGrid = true;
+                    } else {
+                        gsap.fromTo(grid.children, 
+                            { y: 30, opacity: 0 },
+                            { y: 0, opacity: 1, stagger: 0.05, duration: 0.5, ease: "power2.out", overwrite: true }
+                        );
                     }
+                    ScrollTrigger.refresh();
+                }
+            }
+
+            // Initial render
+            renderProjects("All");
+
+            // Filter button event listeners
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderProjects(btn.getAttribute('data-filter'));
                 });
             });
 
@@ -1192,7 +1381,7 @@
                     }
                 }
                 navItems.forEach(link => {
-                    if (link.getAttribute('href') === `#activeId`) link.classList.add('active');
+                    if (link.getAttribute('href') === `#${activeId}`) link.classList.add('active');
                     else link.classList.remove('active');
                 });
             });
@@ -1246,8 +1435,8 @@
             // DESKTOP MODAL LOGIC
             // ==========================================================================
             function openDesktopModal(index) {
-                const p = projects[index];
-                const isImage = p.id === 'p2' || p.videoSrc.match(/\.(webp|jpg|jpeg|png|gif)$/i);
+                const p = currentFilteredProjects[index];
+                const isImage = p.id === 'p2' || (p.video && p.video.match(/\.(webp|jpg|jpeg|png|gif)(\?.*)?$/i));
                 
                 if (currentVideoElement) { currentVideoElement.pause(); currentVideoElement.remove(); currentVideoElement = null; }
                 const existingImg = modalContainer.querySelector('img'); if (existingImg) existingImg.remove();
@@ -1256,7 +1445,7 @@
 
                 if (!isImage) {
                     const video = document.createElement('video');
-                    video.src = p.videoSrc; video.controls = true; video.playsInline = true; video.loop = true; video.preload = "auto";
+                    video.src = p.video; video.controls = true; video.playsInline = true; video.loop = true; video.preload = "auto";
                     currentVideoElement = video;
                     modalContainer.appendChild(video);
 
@@ -1268,18 +1457,17 @@
                     video.addEventListener('loadedmetadata', attemptAutoplay, { once: true });
                 } else {
                     const img = document.createElement('img');
-                    img.src = p.videoSrc; img.alt = "Preview";
+                    img.src = p.video; img.alt = "Preview";
                     img.onload = () => modalLoader.classList.remove('active');
                     modalContainer.appendChild(img);
                 }
             }
 
-            const dShowPrev = () => { if(!mIsMobile){ currentModalIndex = (currentModalIndex - 1 + projects.length) % projects.length; openDesktopModal(currentModalIndex); }};
-            const dShowNext = () => { if(!mIsMobile){ currentModalIndex = (currentModalIndex + 1) % projects.length; openDesktopModal(currentModalIndex); }};
+            const dShowPrev = () => { if(!mIsMobile){ currentModalIndex = (currentModalIndex - 1 + currentFilteredProjects.length) % currentFilteredProjects.length; openDesktopModal(currentModalIndex); }};
+            const dShowNext = () => { if(!mIsMobile){ currentModalIndex = (currentModalIndex + 1) % currentFilteredProjects.length; openDesktopModal(currentModalIndex); }};
             prevBtn.addEventListener('click', dShowPrev);
             nextBtn.addEventListener('click', dShowNext);
 
-            // Updated Document Keydown Event to include 'X' for desktop closing
             document.addEventListener('keydown', (e) => {
                 if (modal.classList.contains('active')) {
                     if (e.key === 'Escape' || e.key.toLowerCase() === 'x') closeBtn.click();
@@ -1293,8 +1481,8 @@
             // ==========================================================================
             function initMobileModal(index) {
                 currentModalIndex = index;
-                const p = projects[index];
-                const isImage = p.id === 'p2' || p.videoSrc.match(/\.(webp|jpg|jpeg|png|gif)$/i);
+                const p = currentFilteredProjects[index];
+                const isImage = p.id === 'p2' || (p.video && p.video.match(/\.(webp|jpg|jpeg|png|gif)(\?.*)?$/i));
                 
                 const imgEl = document.getElementById('mMediaImg');
                 const vidEl = document.getElementById('mMediaVid');
@@ -1308,7 +1496,7 @@
                     vidEl.removeAttribute('src');
                     vidEl.load();
                     
-                    imgEl.src = p.videoSrc;
+                    imgEl.src = p.video;
                     imgEl.style.display = 'block';
                     
                     imgEl.onload = () => { loader.style.display = 'none'; };
@@ -1317,7 +1505,7 @@
                     imgEl.style.display = 'none';
                     vidEl.style.display = 'block';
 
-                    vidEl.src = p.videoSrc;
+                    vidEl.src = p.video;
                     vidEl.muted = false;
                     vidEl.volume = 1.0;
                     
