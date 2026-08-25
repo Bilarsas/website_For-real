@@ -418,7 +418,7 @@
         }
 
         /* ==========================================================================
-           7. PORTFOLIO SECTION
+           7. PORTFOLIO SECTION (JUSTIFIED GRID)
            ========================================================================== */
         .portfolio-filters {
             display: flex;
@@ -455,10 +455,11 @@
             background: rgba(255, 0, 85, 0.1);
         }
 
+        /* Premium Justified Layout (Adapts seamlessly to all aspect ratios) */
         .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
         }
 
         .project-card {
@@ -474,6 +475,20 @@
             z-index: 1;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
+            
+            /* Core math linking to aspect ratio */
+            flex-grow: var(--ratio);
+            flex-shrink: var(--ratio);
+            flex-basis: calc(var(--ratio) * 350px);
+            aspect-ratio: var(--ratio);
+            max-width: 100%; 
+            margin: 0;
+        }
+        
+        /* Absorbs remaining flex space ensuring the final row doesn't infinitely stretch */
+        .portfolio-grid::after {
+            content: '';
+            flex-grow: 10000;
         }
         
         .project-media {
@@ -725,6 +740,7 @@
             justify-content: center;
             align-items: center;
             gap: 3.5rem;
+            flex-wrap: wrap; 
             margin-top: 0; 
             border-top: 1px solid rgba(255,255,255,0.05);
             padding-top: 3.5rem; 
@@ -781,7 +797,8 @@
            ========================================================================== */
         
         @media (max-width: 1024px) {
-            .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem; }
+            .portfolio-grid { gap: 1.5rem; }
+            .project-card { flex-basis: calc(var(--ratio) * 280px); }
         }
 
         @media (max-width: 768px) {
@@ -797,9 +814,9 @@
             .portfolio-filters { gap: 0.5rem; margin-bottom: 2.5rem; }
             .filter-btn { font-size: 0.75rem; padding: 0.5rem 1rem; }
 
-            .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; }
+            .portfolio-grid { gap: 1rem; }
+            .project-card { margin-bottom: 0.5rem; flex-basis: calc(var(--ratio) * 200px); }
             
-            .project-card { margin-bottom: 0.5rem; }
             .project-info { opacity: 1; transform: translateY(0); padding: 3.5rem 1.5rem 1.5rem; }
             
             .contact-container { flex-direction: column; gap: 2rem; padding-top: 2.5rem; }
@@ -865,7 +882,11 @@
 
         @media (max-width: 480px) {
             :root { --spacing-section: 4rem; }
-            .portfolio-grid { grid-template-columns: 1fr; gap: 1.5rem; } 
+            
+            .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; } 
+            .portfolio-grid::after { display: none; }
+            .project-card { width: 100%; flex-basis: auto; height: auto; }
+            
             .hero-subtitle { margin-top: 1.5rem; font-size: 0.95rem; }
             .project-info { padding: 3rem 1.2rem 1.2rem; }
             .project-title { font-size: 1.6rem; }
@@ -978,11 +999,11 @@
                 <h2 class="section-title">Portfolio</h2>
             </div>
             
-            <!-- Category Navigation -->
+            <!-- Category Navigation (Strict Order Requirement Met) -->
             <ul class="portfolio-filters" id="portfolioFilters">
                 <li><button class="filter-btn active" data-filter="All">All</button></li>
+                <li><button class="filter-btn" data-filter="Artist Promo">Artist Promo</button></li>
                 <li><button class="filter-btn" data-filter="Flyers">Flyers</button></li>
-                <li><button class="filter-btn" data-filter="Storytelling">Storytelling</button></li>
                 <li><button class="filter-btn" data-filter="Side Projects">Side Projects</button></li>
             </ul>
 
@@ -1006,6 +1027,13 @@
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span>@bill.k.films</span>
+                </a>
+
+                <a href="https://www.tiktok.com/@bill.k.films?_r=1&_t=ZN-99BdJsGxo6o" target="_blank" rel="noopener noreferrer" class="contact-item hover-target" aria-label="Visit TikTok Profile">
+                    <svg class="contact-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
                     </svg>
                     <span>@bill.k.films</span>
                 </a>
@@ -1073,15 +1101,27 @@
          ========================================================================== -->
     <script>
         // ==========================================================================
-        // PROJECTS — EDIT YOUR PROJECTS HERE
+        // PROJECTS — STRICT ORDER REQUIREMENT APPLIED
         // ==========================================================================
-        // To add a new project, copy an existing block below, paste it, and change the values.
-        // 'category' must be exactly: "Flyers", "Storytelling", or "Side Projects".
-        // Aspect ratio is calculated automatically using the 'width' and 'height'.
-        // To change a thumbnail, edit the "thumb" URL. If you remove the "thumb" line entirely, 
-        // the website will gracefully fall back to extracting a video frame for you.
-
         const projects = [
+            {
+                id: "Saske Ores",
+                name: "Saske Ores",
+                category: "Artist Promo",
+                width: 1080,
+                height: 1080,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1787668884/Saske_Ores_Thub_kvbi0f.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1787668883/Saske_Ores_f2gq14.webm"
+            },
+            {
+                id: "p5",
+                name: "Trapper Promo",
+                category: "Artist Promo",
+                width: 1,
+                height: 1,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/Tony_Montana_Light_zhyiso.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036541/Tony_Montana_II_2026_lnqgfc.webm"
+            },
             {
                 id: "p1",
                 name: "TOQUEL FLYER",
@@ -1090,6 +1130,15 @@
                 height: 5,
                 thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/Toquel_V22_wystxs.webp",
                 video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036528/Toquel_V22_dpuuw0.webm"
+            },
+            {
+                id: "p6",
+                name: "DJ Flyer",
+                category: "Flyers",
+                width: 4,
+                height: 5,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036519/DJ_SANDA_e7squm.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036664/DJ_Sanda_kp27zq.webm"
             },
             {
                 id: "p3",
@@ -1102,39 +1151,12 @@
             },
             {
                 id: "p4",
-                name: "DJ NAMAR flyer",
+                name: "DJ NAMAR Flyer",
                 category: "Flyers",
                 width: 4,
                 height: 5,
                 thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036515/DJ_Namar_q0qgbe.webp",
                 video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036605/DJ_Namar_u3p9ut.webm"
-            },
-            {
-                id: "p5",
-                name: "trapper promo",
-                category: "Flyers",
-                width: 1,
-                height: 1,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/Tony_Montana_Light_zhyiso.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036541/Tony_Montana_II_2026_lnqgfc.webm"
-            },
-            {
-                id: "p6",
-                name: "DJ flyer",
-                category: "Flyers",
-                width: 4,
-                height: 5,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036519/DJ_SANDA_e7squm.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036664/DJ_Sanda_kp27zq.webm"
-            },
-            {
-                id: "car-edit",
-                name: "Car Edit",
-                category: "Side Projects",
-                width: 1080,
-                height: 1920,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225628/Car_edit_wzbihz.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786223113/Dark_Thoughts_c70kdi.webm"
             },
             {
                 id: "mustang-edit",
@@ -1144,6 +1166,15 @@
                 height: 1920,
                 thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225632/Mustang_dejgga.webp",
                 video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786222487/mustang_final_ci2ioi.webm"
+            },
+            {
+                id: "car-edit",
+                name: "Car Edit",
+                category: "Side Projects",
+                width: 1080,
+                height: 1920,
+                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225628/Car_edit_wzbihz.webp",
+                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786223113/Dark_Thoughts_c70kdi.webm"
             },
             {
                 id: "f1-edit",
@@ -1157,7 +1188,7 @@
             {
                 id: "kafouros",
                 name: "Kafouros",
-                category: "Storytelling",
+                category: "Side Projects",
                 width: 1080,
                 height: 1920,
                 thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225632/Kafouros_1_sn2a0t.webp",
@@ -1166,20 +1197,11 @@
             {
                 id: "kafouros-2",
                 name: "Kafouros 2",
-                category: "Storytelling",
+                category: "Side Projects",
                 width: 1080,
                 height: 1920,
                 thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225631/Kafouros_2_rbjbfe.webp",
                 video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786223041/kafouros_ifhhxn.webm"
-            },
-            {
-                id: "Saske Ores",
-                name: "Saske Ores",
-                category: "Side Projects",
-                width: 1080,
-                height: 1080,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1787668884/Saske_Ores_Thub_kvbi0f.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1787668883/Saske_Ores_f2gq14.webm"
             }
         ];
         // ==========================================================================
@@ -1302,7 +1324,9 @@
                 
                 grid.innerHTML = currentFilteredProjects.map((p, index) => {
                     const isImage = p.id === 'p2' || (p.video && p.video.match(/\.(webp|jpg|jpeg|png|gif)(\?.*)?$/i));
-                    const ratio = `${p.width}/${p.height}`;
+                    
+                    // Ratio drives the magical Justified Flex Layout CSS logic
+                    const ratioValue = p.width / p.height; 
                     
                     const thumbHtml = p.thumb ? `<img src="${p.thumb}" alt="Thumbnail for ${p.name}" loading="lazy" decoding="async">` : '';
                     const fallbackImgHtml = (isImage && !p.thumb) ? `<img src="${p.video}" alt="${p.name}" loading="lazy">` : '';
@@ -1312,13 +1336,12 @@
                         if (p.thumb) {
                             videoHtml = `<video data-src="${p.video}" loop muted playsinline preload="none"></video>`;
                         } else {
-                            // If no thumbnail, use video frame at 0.1s as thumbnail and make it visible
                             videoHtml = `<video src="${p.video}#t=0.1" data-src="${p.video}" loop muted playsinline preload="metadata" style="opacity: 1;"></video>`;
                         }
                     }
                     
                     return `
-                        <div class="project-card hover-target ${!isImage ? 'has-video' : ''}" role="listitem" tabindex="0" style="aspect-ratio: ${ratio};" data-index="${index}" data-type="${isImage ? 'image' : 'video'}">
+                        <div class="project-card hover-target ${!isImage ? 'has-video' : ''}" role="listitem" tabindex="0" style="--ratio: ${ratioValue};" data-index="${index}" data-type="${isImage ? 'image' : 'video'}">
                             <div class="project-media">
                                 ${thumbHtml}
                                 ${fallbackImgHtml}
