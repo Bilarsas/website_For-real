@@ -6,13 +6,17 @@
     <title>Bill.K.Films | Motion Design & Social Media</title>
     <meta name="description" content="High-impact promotion viral videos, animated event flyers, and visual storytelling tailored for the modern digital landscape.">
     <meta name="theme-color" content="#050505">
+    
+    <!-- Favicon / Site Icon -->
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
+    <link rel="apple-touch-icon" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
 
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
-    <!-- External Libraries (Locked versions for stability) -->
+    <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
@@ -231,12 +235,20 @@
         }
 
         .logo {
-            font-family: var(--font-head);
-            font-size: clamp(1.2rem, 5vw, 1.8rem);
-            letter-spacing: 2px;
-            color: var(--text-main);
-            position: relative;
+            display: flex;
+            align-items: center;
             z-index: 2;
+        }
+        
+        .logo img {
+            height: clamp(25px, 4vw, 36px);
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s var(--ease-out);
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
         }
 
         .nav-links {
@@ -418,7 +430,7 @@
         }
 
         /* ==========================================================================
-           7. PORTFOLIO SECTION (JUSTIFIED GRID)
+           7. PORTFOLIO SECTION (PREMIUM GRID)
            ========================================================================== */
         .portfolio-filters {
             display: flex;
@@ -455,11 +467,12 @@
             background: rgba(255, 0, 85, 0.1);
         }
 
-        /* Premium Justified Layout (Adapts seamlessly to all aspect ratios) */
+        /* Premium Uniform Layout */
         .portfolio-grid {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
+            width: 100%;
         }
 
         .project-card {
@@ -476,19 +489,58 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             
-            /* Core math linking to aspect ratio */
-            flex-grow: var(--ratio);
-            flex-shrink: var(--ratio);
-            flex-basis: calc(var(--ratio) * 350px);
-            aspect-ratio: var(--ratio);
-            max-width: 100%; 
+            /* Enforcing uniform aspect ratio for a curated premium look */
+            aspect-ratio: 4 / 5;
+            width: 100%; 
             margin: 0;
         }
-        
-        /* Absorbs remaining flex space ensuring the final row doesn't infinitely stretch */
-        .portfolio-grid::after {
-            content: '';
-            flex-grow: 10000;
+
+        .hidden-project {
+            display: none !important;
+        }
+
+        .load-more-container {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 3rem;
+            width: 100%;
+        }
+
+        .load-more-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            transition: color 0.3s, transform 0.3s var(--ease-out-expo);
+        }
+
+        .load-more-btn:hover, .load-more-btn:focus-visible {
+            color: var(--neon-accent);
+            transform: translateY(-5px);
+        }
+
+        .load-more-arrow {
+            width: 28px;
+            height: 28px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            animation: floatArrow 2s infinite ease-in-out;
+        }
+
+        @keyframes floatArrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
         }
         
         .project-media {
@@ -797,8 +849,7 @@
            ========================================================================== */
         
         @media (max-width: 1024px) {
-            .portfolio-grid { gap: 1.5rem; }
-            .project-card { flex-basis: calc(var(--ratio) * 280px); }
+            .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         }
 
         @media (max-width: 768px) {
@@ -814,8 +865,7 @@
             .portfolio-filters { gap: 0.5rem; margin-bottom: 2.5rem; }
             .filter-btn { font-size: 0.75rem; padding: 0.5rem 1rem; }
 
-            .portfolio-grid { gap: 1rem; }
-            .project-card { margin-bottom: 0.5rem; flex-basis: calc(var(--ratio) * 200px); }
+            .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
             
             .project-info { opacity: 1; transform: translateY(0); padding: 3.5rem 1.5rem 1.5rem; }
             
@@ -883,9 +933,8 @@
         @media (max-width: 480px) {
             :root { --spacing-section: 4rem; }
             
-            .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; } 
-            .portfolio-grid::after { display: none; }
-            .project-card { width: 100%; flex-basis: auto; height: auto; }
+            .portfolio-grid { grid-template-columns: 1fr; gap: 1.5rem; } 
+            .project-card { width: 100%; height: auto; }
             
             .hero-subtitle { margin-top: 1.5rem; font-size: 0.95rem; }
             .project-info { padding: 3rem 1.2rem 1.2rem; }
@@ -912,6 +961,7 @@
             .glitch:hover::before { animation: none; }
             .project-info { opacity: 1; transform: translateY(0); }
             .nav-item-icon { transform: translateY(0); opacity: 1; }
+            .load-more-arrow { animation: none !important; }
         }
     </style>
 </head>
@@ -928,7 +978,9 @@
 
     <!-- Navigation -->
     <nav id="navbar">
-        <a href="#top" class="logo hover-target" aria-label="Home">Bill.K.Films</a>
+        <a href="#top" class="logo hover-target" aria-label="Home">
+            <img src="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png" alt="Bill.K.Films Logo">
+        </a>
         <ul class="nav-links">
             <li>
                 <a href="#expertise" class="nav-item hover-target">
@@ -999,7 +1051,7 @@
                 <h2 class="section-title">Portfolio</h2>
             </div>
             
-            <!-- Category Navigation (Strict Order Requirement Met) -->
+            <!-- Category Navigation -->
             <ul class="portfolio-filters" id="portfolioFilters">
                 <li><button class="filter-btn active" data-filter="All">All</button></li>
                 <li><button class="filter-btn" data-filter="Artist Promo">Artist Promo</button></li>
@@ -1101,7 +1153,7 @@
          ========================================================================== -->
     <script>
         // ==========================================================================
-        // PROJECTS — STRICT ORDER REQUIREMENT APPLIED
+        // PROJECTS — STRICT ORDER & CATEGORIES
         // ==========================================================================
         const projects = [
             {
@@ -1269,13 +1321,13 @@
 
                 document.addEventListener('mouseover', (e) => {
                     const target = e.target;
-                    if (target.closest('.project-card')) return; 
+                    if (target.closest('.project-card') || target.closest('.load-more-btn')) return; 
                     if (target.closest('a') || target.closest('button') || target.closest('.hover-target')) cursor.classList.add('hover-active');
                 });
 
                 document.addEventListener('mouseout', (e) => {
                     const target = e.target;
-                    if (target.closest('.project-card')) return;
+                    if (target.closest('.project-card') || target.closest('.load-more-btn')) return;
                     if (target.closest('a') || target.closest('button') || target.closest('.hover-target')) cursor.classList.remove('hover-active');
                 });
             }
@@ -1284,6 +1336,7 @@
             const grid = document.getElementById('portfolioGrid');
             let currentFilteredProjects = projects;
             let hasAnimatedGrid = false;
+            const displayLimit = 10; 
 
             function attachCardListeners() {
                 document.querySelectorAll('.project-card').forEach(card => {
@@ -1322,12 +1375,8 @@
             function renderProjects(filter = "All") {
                 currentFilteredProjects = filter === "All" ? projects : projects.filter(p => p.category === filter);
                 
-                grid.innerHTML = currentFilteredProjects.map((p, index) => {
+                let htmlStr = currentFilteredProjects.map((p, index) => {
                     const isImage = p.id === 'p2' || (p.video && p.video.match(/\.(webp|jpg|jpeg|png|gif)(\?.*)?$/i));
-                    
-                    // Ratio drives the magical Justified Flex Layout CSS logic
-                    const ratioValue = p.width / p.height; 
-                    
                     const thumbHtml = p.thumb ? `<img src="${p.thumb}" alt="Thumbnail for ${p.name}" loading="lazy" decoding="async">` : '';
                     const fallbackImgHtml = (isImage && !p.thumb) ? `<img src="${p.video}" alt="${p.name}" loading="lazy">` : '';
                     
@@ -1339,9 +1388,12 @@
                             videoHtml = `<video src="${p.video}#t=0.1" data-src="${p.video}" loop muted playsinline preload="metadata" style="opacity: 1;"></video>`;
                         }
                     }
+
+                    // Hide elements exceeding the display limit initially
+                    const isHiddenClass = index >= displayLimit ? 'hidden-project' : '';
                     
                     return `
-                        <div class="project-card hover-target ${!isImage ? 'has-video' : ''}" role="listitem" tabindex="0" style="--ratio: ${ratioValue};" data-index="${index}" data-type="${isImage ? 'image' : 'video'}">
+                        <div class="project-card hover-target ${isHiddenClass} ${!isImage ? 'has-video' : ''}" role="listitem" tabindex="0" data-index="${index}" data-type="${isImage ? 'image' : 'video'}">
                             <div class="project-media">
                                 ${thumbHtml}
                                 ${fallbackImgHtml}
@@ -1353,18 +1405,57 @@
                         </div>
                     `;
                 }).join('');
-                
+
+                // Append the Load More Interaction securely if more items exist
+                if (currentFilteredProjects.length > displayLimit) {
+                    htmlStr += `
+                        <div class="load-more-container" id="loadMoreContainer">
+                            <button class="load-more-btn" id="loadMoreBtn" aria-label="Load remaining projects">
+                                <span>Load More</span>
+                                <svg class="load-more-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                }
+
+                grid.innerHTML = htmlStr;
                 attachCardListeners();
+
+                // Attach 'Load More' Interaction 
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                if (loadMoreBtn) {
+                    loadMoreBtn.addEventListener('click', () => {
+                        document.getElementById('loadMoreContainer').style.display = 'none';
+                        const hiddenCards = document.querySelectorAll('.hidden-project');
+                        
+                        hiddenCards.forEach(card => {
+                            card.classList.remove('hidden-project');
+                            if (!prefersReducedMotion) {
+                                gsap.fromTo(card, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" });
+                            }
+                        });
+                        
+                        // Recalculate ScrollTrigger markers
+                        ScrollTrigger.refresh();
+                    });
+                    
+                    // Specific Hover bindings for the button
+                    loadMoreBtn.addEventListener('mouseenter', () => { if(cursor && !isTouchDevice && !mIsMobile) cursor.classList.add('hover-active'); });
+                    loadMoreBtn.addEventListener('mouseleave', () => { if(cursor && !isTouchDevice && !mIsMobile) cursor.classList.remove('hover-active'); });
+                }
                 
+                // Entrance Animation
                 if (!prefersReducedMotion) {
                     if (!hasAnimatedGrid) {
-                        gsap.fromTo(grid.children, 
+                        gsap.fromTo(grid.querySelectorAll('.project-card:not(.hidden-project)'), 
                             { y: 50, opacity: 0 },
                             { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: grid, start: "top 85%" } }
                         );
                         hasAnimatedGrid = true;
                     } else {
-                        gsap.fromTo(grid.children, 
+                        gsap.fromTo(grid.querySelectorAll('.project-card:not(.hidden-project)'), 
                             { y: 30, opacity: 0 },
                             { y: 0, opacity: 1, stagger: 0.05, duration: 0.5, ease: "power2.out", overwrite: true }
                         );
