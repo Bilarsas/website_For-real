@@ -211,9 +211,10 @@
         .section-title {
             font-family: var(--font-head);
             font-size: clamp(2.5rem, 6vw, 5.5rem);
-            line-height: 1;
+            line-height: 1.05;
             text-transform: uppercase;
-            letter-spacing: -1px;
+            letter-spacing: 0.04em;
+            word-spacing: 0.08em;
         }
 
         /* ==========================================================================
@@ -430,7 +431,7 @@
         }
 
         /* ==========================================================================
-           7. PORTFOLIO SECTION (PREMIUM GRID)
+           7. PORTFOLIO SECTION (PREMIUM GRID & CONTROLS)
            ========================================================================== */
         .portfolio-filters {
             display: flex;
@@ -500,15 +501,15 @@
         }
 
         .load-more-container {
-            grid-column: 1 / -1;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 3rem;
+            gap: 1.5rem;
+            margin-top: 3.5rem;
             width: 100%;
         }
 
-        .load-more-btn {
+        .load-more-btn, .show-less-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -520,14 +521,18 @@
             letter-spacing: 2px;
             color: var(--text-muted);
             transition: color 0.3s, transform 0.3s var(--ease-out-expo);
+            background: none;
+            border: none;
+            cursor: none;
         }
 
-        .load-more-btn:hover, .load-more-btn:focus-visible {
+        .load-more-btn:hover, .load-more-btn:focus-visible,
+        .show-less-btn:hover, .show-less-btn:focus-visible {
             color: var(--neon-accent);
             transform: translateY(-5px);
         }
 
-        .load-more-arrow {
+        .load-more-arrow, .show-less-arrow {
             width: 28px;
             height: 28px;
             fill: none;
@@ -535,12 +540,24 @@
             stroke-width: 1.5;
             stroke-linecap: round;
             stroke-linejoin: round;
+        }
+
+        .load-more-arrow {
             animation: floatArrow 2s infinite ease-in-out;
+        }
+
+        .show-less-arrow {
+            animation: floatArrowUp 2s infinite ease-in-out;
         }
 
         @keyframes floatArrow {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(6px); }
+        }
+
+        @keyframes floatArrowUp {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
         
         .project-media {
@@ -961,7 +978,7 @@
             .glitch:hover::before { animation: none; }
             .project-info { opacity: 1; transform: translateY(0); }
             .nav-item-icon { transform: translateY(0); opacity: 1; }
-            .load-more-arrow { animation: none !important; }
+            .load-more-arrow, .show-less-arrow { animation: none !important; }
         }
     </style>
 </head>
@@ -1062,6 +1079,22 @@
             <div class="portfolio-grid" id="portfolioGrid" role="list">
                 <!-- Javascript will inject projects here -->
             </div>
+
+            <!-- Load More / Show Less Controls -->
+            <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+                <button class="load-more-btn hover-target" id="loadMoreBtn" aria-label="Load remaining projects">
+                    <span>Load More</span>
+                    <svg class="load-more-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <button class="show-less-btn hover-target" id="showLessBtn" aria-label="Show default grid" style="display: none;">
+                    <span>Show Less</span>
+                    <svg class="show-less-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                </button>
+            </div>
         </section>
     </main>
 
@@ -1085,7 +1118,7 @@
 
                 <a href="https://www.tiktok.com/@bill.k.films?_r=1&_t=ZN-99BdJsGxo6o" target="_blank" rel="noopener noreferrer" class="contact-item hover-target" aria-label="Visit TikTok Profile">
                     <svg class="contact-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+                        <path d="M21 7.917v4.034a9.948 9.948 0 0 1 -5 -1.951v4.5a6.5 6.5 0 1 1 -8 -6.326v4.326a2.5 2.5 0 1 0 4 2v-11.5h4.083a6.005 6.005 0 0 0 4.917 4.917z"></path>
                     </svg>
                     <span>@bill.k.films</span>
                 </a>
@@ -1256,7 +1289,28 @@
                 video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786223041/kafouros_ifhhxn.webm"
             }
         ];
+
+        // --------------------------------------------------------------------------
+        // Hidden Projects
+        // Add or remove project IDs or Names here to control which projects appear
+        // behind the "Load More" button.
+        // Projects listed here are automatically moved from the default grid into
+        // Load More while strictly respecting their category.
+        // --------------------------------------------------------------------------
+        const hiddenProjects = [
+            "kafouros",
+            "kafouros-2"
+        ];
         // ==========================================================================
+
+        // Utility to check if a project is hidden by default
+        function isProjectHidden(p) {
+            if (!hiddenProjects || !Array.isArray(hiddenProjects)) return false;
+            return hiddenProjects.some(hiddenItem => {
+                const str = String(hiddenItem).trim().toLowerCase();
+                return (p.id && p.id.toLowerCase() === str) || (p.name && p.name.toLowerCase() === str);
+            });
+        }
 
         document.addEventListener("DOMContentLoaded", () => {
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1321,22 +1375,24 @@
 
                 document.addEventListener('mouseover', (e) => {
                     const target = e.target;
-                    if (target.closest('.project-card') || target.closest('.load-more-btn')) return; 
+                    if (target.closest('.project-card') || target.closest('.load-more-btn') || target.closest('.show-less-btn')) return; 
                     if (target.closest('a') || target.closest('button') || target.closest('.hover-target')) cursor.classList.add('hover-active');
                 });
 
                 document.addEventListener('mouseout', (e) => {
                     const target = e.target;
-                    if (target.closest('.project-card') || target.closest('.load-more-btn')) return;
+                    if (target.closest('.project-card') || target.closest('.load-more-btn') || target.closest('.show-less-btn')) return;
                     if (target.closest('a') || target.closest('button') || target.closest('.hover-target')) cursor.classList.remove('hover-active');
                 });
             }
 
             // 3. Render Portfolio Grid & Category Logic
             const grid = document.getElementById('portfolioGrid');
-            let currentFilteredProjects = projects;
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const showLessBtn = document.getElementById('showLessBtn');
+            let currentFilteredProjects = [];
             let hasAnimatedGrid = false;
-            const displayLimit = 10; 
 
             function attachCardListeners() {
                 document.querySelectorAll('.project-card').forEach(card => {
@@ -1373,9 +1429,17 @@
             }
 
             function renderProjects(filter = "All") {
-                currentFilteredProjects = filter === "All" ? projects : projects.filter(p => p.category === filter);
+                const categoryFiltered = filter === "All" ? projects : projects.filter(p => p.category === filter);
+                
+                // Partition into default visible and hidden projects while maintaining strict structure
+                const defaultProjects = categoryFiltered.filter(p => !isProjectHidden(p));
+                const hiddenCategoryProjects = categoryFiltered.filter(p => isProjectHidden(p));
+                
+                // Combine order so default projects come first, followed by hidden projects
+                currentFilteredProjects = [...defaultProjects, ...hiddenCategoryProjects];
                 
                 let htmlStr = currentFilteredProjects.map((p, index) => {
+                    const hiddenByDefault = isProjectHidden(p);
                     const isImage = p.id === 'p2' || (p.video && p.video.match(/\.(webp|jpg|jpeg|png|gif)(\?.*)?$/i));
                     const thumbHtml = p.thumb ? `<img src="${p.thumb}" alt="Thumbnail for ${p.name}" loading="lazy" decoding="async">` : '';
                     const fallbackImgHtml = (isImage && !p.thumb) ? `<img src="${p.video}" alt="${p.name}" loading="lazy">` : '';
@@ -1389,11 +1453,10 @@
                         }
                     }
 
-                    // Hide elements exceeding the display limit initially
-                    const isHiddenClass = index >= displayLimit ? 'hidden-project' : '';
+                    const hiddenClass = hiddenByDefault ? 'hidden-project is-hidden-by-default' : '';
                     
                     return `
-                        <div class="project-card hover-target ${isHiddenClass} ${!isImage ? 'has-video' : ''}" role="listitem" tabindex="0" data-index="${index}" data-type="${isImage ? 'image' : 'video'}">
+                        <div class="project-card hover-target ${hiddenClass} ${!isImage ? 'has-video' : ''}" role="listitem" tabindex="0" data-index="${index}" data-type="${isImage ? 'image' : 'video'}">
                             <div class="project-media">
                                 ${thumbHtml}
                                 ${fallbackImgHtml}
@@ -1406,46 +1469,20 @@
                     `;
                 }).join('');
 
-                // Append the Load More Interaction securely if more items exist
-                if (currentFilteredProjects.length > displayLimit) {
-                    htmlStr += `
-                        <div class="load-more-container" id="loadMoreContainer">
-                            <button class="load-more-btn" id="loadMoreBtn" aria-label="Load remaining projects">
-                                <span>Load More</span>
-                                <svg class="load-more-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </button>
-                        </div>
-                    `;
-                }
-
                 grid.innerHTML = htmlStr;
                 attachCardListeners();
 
-                // Attach 'Load More' Interaction 
-                const loadMoreBtn = document.getElementById('loadMoreBtn');
-                if (loadMoreBtn) {
-                    loadMoreBtn.addEventListener('click', () => {
-                        document.getElementById('loadMoreContainer').style.display = 'none';
-                        const hiddenCards = document.querySelectorAll('.hidden-project');
-                        
-                        hiddenCards.forEach(card => {
-                            card.classList.remove('hidden-project');
-                            if (!prefersReducedMotion) {
-                                gsap.fromTo(card, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" });
-                            }
-                        });
-                        
-                        // Recalculate ScrollTrigger markers
-                        ScrollTrigger.refresh();
-                    });
-                    
-                    // Specific Hover bindings for the button
-                    loadMoreBtn.addEventListener('mouseenter', () => { if(cursor && !isTouchDevice && !mIsMobile) cursor.classList.add('hover-active'); });
-                    loadMoreBtn.addEventListener('mouseleave', () => { if(cursor && !isTouchDevice && !mIsMobile) cursor.classList.remove('hover-active'); });
+                // Setup Load More / Show Less Visibility
+                if (hiddenCategoryProjects.length > 0) {
+                    loadMoreContainer.style.display = 'flex';
+                    loadMoreBtn.style.display = 'flex';
+                    showLessBtn.style.display = 'none';
+                } else {
+                    loadMoreContainer.style.display = 'none';
+                    loadMoreBtn.style.display = 'none';
+                    showLessBtn.style.display = 'none';
                 }
-                
+
                 // Entrance Animation
                 if (!prefersReducedMotion) {
                     if (!hasAnimatedGrid) {
@@ -1463,6 +1500,61 @@
                     ScrollTrigger.refresh();
                 }
             }
+
+            // Bind Load More / Show Less Event Handlers
+            loadMoreBtn.addEventListener('click', () => {
+                const hiddenCards = grid.querySelectorAll('.is-hidden-by-default');
+                hiddenCards.forEach(card => card.classList.remove('hidden-project'));
+                
+                if (!prefersReducedMotion) {
+                    gsap.fromTo(hiddenCards, 
+                        { opacity: 0 }, 
+                        { opacity: 1, duration: 0.4, stagger: 0.04, ease: "power2.out" }
+                    );
+                }
+                
+                loadMoreBtn.style.display = 'none';
+                showLessBtn.style.display = 'flex';
+                if (!prefersReducedMotion) {
+                    gsap.fromTo(showLessBtn, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+                }
+                
+                ScrollTrigger.refresh();
+            });
+
+            showLessBtn.addEventListener('click', () => {
+                const hiddenCards = grid.querySelectorAll('.is-hidden-by-default');
+
+                if (!prefersReducedMotion) {
+                    gsap.to(hiddenCards, {
+                        opacity: 0,
+                        duration: 0.3,
+                        stagger: {
+                            each: 0.03,
+                            from: "end"
+                        },
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                            hiddenCards.forEach(card => card.classList.add('hidden-project'));
+                            showLessBtn.style.display = 'none';
+                            loadMoreBtn.style.display = 'flex';
+                            gsap.fromTo(loadMoreBtn, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+                            ScrollTrigger.refresh();
+                        }
+                    });
+                } else {
+                    hiddenCards.forEach(card => card.classList.add('hidden-project'));
+                    showLessBtn.style.display = 'none';
+                    loadMoreBtn.style.display = 'flex';
+                    ScrollTrigger.refresh();
+                }
+            });
+
+            // Bind Custom Cursor events to grid controls
+            [loadMoreBtn, showLessBtn].forEach(btn => {
+                btn.addEventListener('mouseenter', () => { if(cursor && !isTouchDevice && !mIsMobile) cursor.classList.add('hover-active'); });
+                btn.addEventListener('mouseleave', () => { if(cursor && !isTouchDevice && !mIsMobile) cursor.classList.remove('hover-active'); });
+            });
 
             // Initial render
             renderProjects("All");
@@ -1600,7 +1692,7 @@
             });
 
             // ==========================================================================
-            // MOBILE MODAL (SIMPLIFIED SINGLE-VIEW) LOGIC
+            // MOBILE MODAL LOGIC
             // ==========================================================================
             function initMobileModal(index) {
                 currentModalIndex = index;
