@@ -71,6 +71,11 @@
         ul, ol { list-style: none; }
         img, video { max-width: 100%; display: block; height: auto; }
         button { background: none; border: none; font: inherit; color: inherit; cursor: none; }
+        
+        strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
@@ -187,11 +192,17 @@
 
         section { padding: var(--spacing-section) 0; }
         
+        #about { padding-bottom: calc(var(--spacing-section) / 2); }
         #expertise { padding-bottom: calc(var(--spacing-section) / 2); }
         
         #work { 
             padding-top: calc(var(--spacing-section) / 2);
             padding-bottom: clamp(6rem, 10vw, 12rem); 
+        }
+
+        #about-me { 
+            padding-top: calc(var(--spacing-section) / 2); 
+            padding-bottom: clamp(4rem, 8vw, 8rem); 
         }
 
         .section-header {
@@ -221,6 +232,22 @@
             text-transform: uppercase;
             letter-spacing: 0.04em;
             word-spacing: 0.08em;
+        }
+
+        .section-intro-text {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .content-wrapper-narrow {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         /* ==========================================================================
@@ -378,6 +405,49 @@
             margin-top: 2.5rem;
             line-height: 1.7;
             font-weight: 400;
+        }
+
+        /* ==========================================================================
+           5.5 ABOUT CARDS
+           ========================================================================== */
+        .about-card {
+            background: var(--bg-surface);
+            padding: 3.5rem 3rem;
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            transition: transform 0.5s var(--ease-out-expo), border-color 0.5s, background-color 0.5s, box-shadow 0.5s;
+            will-change: transform;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .about-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 0, 85, 0.3);
+            background: var(--bg-surface-hover);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 0, 85, 0.05);
+        }
+
+        .about-card-title {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-main);
+        }
+
+        .about-card p {
+            color: var(--text-muted);
+            line-height: 1.75;
+            font-size: 1rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .about-card p:last-child {
+            margin-bottom: 0;
         }
 
         /* ==========================================================================
@@ -990,6 +1060,7 @@
             .hero-title { font-size: 14vw; line-height: 1.05; letter-spacing: -1px; width: 100%; text-align: center; }
             .hero-title.outline { font-size: 8vw; margin-top: 0.5rem; -webkit-text-stroke: 1px rgba(244, 244, 244, 0.8); }
 
+            .about-card { padding: 2.5rem 1.5rem; }
             .services-grid { grid-template-columns: 1fr; }
             
             /* Responsive Results Update */
@@ -1120,8 +1191,13 @@
         </a>
         <ul class="nav-links">
             <li>
+                <a href="#about" class="nav-item hover-target">
+                    About <span class="nav-item-icon" aria-hidden="true">↘</span>
+                </a>
+            </li>
+            <li>
                 <a href="#expertise" class="nav-item hover-target">
-                    Expertise <span class="nav-item-icon" aria-hidden="true">↘</span>
+                    Services <span class="nav-item-icon" aria-hidden="true">↘</span>
                 </a>
             </li>
             <li>
@@ -1155,28 +1231,69 @@
             </div>
         </header>
 
-        <!-- Expertise Section -->
+        <!-- Intro / What Is Bill.K Films? -->
+        <section id="about" class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Vision & Reality</span>
+                <h2 class="section-title">The Studio</h2>
+            </div>
+            
+            <div class="content-wrapper-narrow">
+                <article class="about-card hover-target">
+                    <h3 class="about-card-title">What Is Bill.K Films?</h3>
+                    <p>Bill.K Films is a creative studio with a simple mission: to transform your vision into reality through high-performing videos made for social media.</p>
+                    <p>Founded in early 2026, Bill.K Films focuses on creating high-end promotional content for artists, businesses, and creators who want to stand out and connect with their audience online.
+
+So far, we’ve worked on 11 projects. While only 3 of them have been published on TikTok, those few projects alone have already reached over 150K+ views and traction on the platform, showing the potential of our work to help artists, businesses, and professionals get noticed online.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Expertise / Services Section -->
         <section id="expertise" class="container">
             <div class="section-header">
-                <span class="section-subtitle">!Go Viral!</span>
-                <h2 class="section-title">Studio Expertise</h2>
+                <span class="section-subtitle">What We Do</span>
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-intro-text">
+                    Bill.K Films offers a variety of services, making it ideal for trappers, rappers, artists, DJs, creators, and business owners looking to elevate their content and reach a wider audience online. We don’t just create basic short-form content, we create high-end promo edits using premium visuals designed to grab people’s attention on the internet. Before starting a project, we analyze the artist’s or business’s style, vision, identity, and goals, incorporating these elements into a unique video that represents them and connects with their audience.
+                </p>
             </div>
             
             <div class="services-grid">
                 <article class="service-card hover-target">
                     <div class="service-icon" aria-hidden="true">01</div>
-                    <h3 class="service-title">Animated Flyers</h3>
-                    <p class="service-desc">Transforming static artwork into high-energy motion graphics. Perfect for club announcements, festival lineups, and premium event marketing.</p>
+                    <h3 class="service-title">Spotify Canvases</h3>
+                    <p class="service-desc">High-impact animated Spotify canvases designed to turn static track artwork into looping, immersive visual experiences for your listeners.</p>
                 </article>
+
                 <article class="service-card hover-target">
                     <div class="service-icon" aria-hidden="true">02</div>
-                    <h3 class="service-title">event Recaps</h3>
-                    <p class="service-desc">Optimized event recaps and DJ promos. Fast-paced editing, dynamic transitions, and precision color grading designed perfectly for socials.</p>
+                    <h3 class="service-title">Lyric Videos</h3>
+                    <p class="service-desc">High-end lyric videos featuring dynamic kinetic typography, fluid visual effects, and custom pacing built for maximum view retention.</p>
                 </article>
+
                 <article class="service-card hover-target">
                     <div class="service-icon" aria-hidden="true">03</div>
-                    <h3 class="service-title">Artists Promos</h3>
-                    <p class="service-desc">From Spotify Canvases to high-end lyric edits, Bill.K Films creates promotional content designed to bring your vision to life, reach more people, and turn your next album into a viral hit!</p>
+                    <h3 class="service-title">Artist Promos</h3>
+                    <p class="service-desc">Tailored promotional videos for rappers, trappers, DJs, and artists designed to amplify your release and stand out on social media feeds.</p>
+                </article>
+
+                <article class="service-card hover-target">
+                    <div class="service-icon" aria-hidden="true">04</div>
+                    <h3 class="service-title">Animated Flyers</h3>
+                    <p class="service-desc">Transforming static artwork and posters into vibrant motion graphics for club announcements, festival lineups, and event marketing.</p>
+                </article>
+
+                <article class="service-card hover-target">
+                    <div class="service-icon" aria-hidden="true">05</div>
+                    <h3 class="service-title">Storytelling</h3>
+                    <p class="service-desc">Narrative-focused visual edits that highlight your artist identity, brand message, and personal journey to deeply connect with your audience.</p>
+                </article>
+
+                <article class="service-card hover-target">
+                    <div class="service-icon" aria-hidden="true">06</div>
+                    <h3 class="service-title">Club Recaps</h3>
+                    <p class="service-desc">Fast-paced club promo edits and event recaps featuring rhythmic cuts, precision color grading, and high-energy sound design.</p>
                 </article>
             </div>
         </section>
@@ -1256,6 +1373,23 @@
                         <polyline points="18 15 12 9 6 15"></polyline>
                     </svg>
                 </button>
+            </div>
+        </section>
+
+        <!-- About Me Section (Moved to Bottom) -->
+        <section id="about-me" class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Behind the Edits</span>
+                <h2 class="section-title">The Creator</h2>
+            </div>
+            
+            <div class="content-wrapper-narrow">
+                <article class="about-card hover-target">
+                    <h3 class="about-card-title">About Me</h3>
+                    <p>My name is Βασίλης Κολλάρος. I’m an 18-year-old specialized video editor, born and raised in Kaisariani, Athens.</p>
+                    <p>The reason I created Bill.K Films is because I had seen so many talented artists fall behind, not because of their artistic talent, songs, or albums, but because they didn’t have the ability to reach the right audience on social media.</p>
+                    <p>Our mission is to transform your vision into reality by creating visuals and edits that capture attention, build recognition, and help your work get discovered on social media.</p>
+                </article>
             </div>
         </section>
     </main>
@@ -1737,8 +1871,7 @@
             
             const calculateBounds = () => {
                 sectionBounds.length = 0;
-                // Results is intentionally added to ScrollSpy bounds without a navItem to ensure elegant transitions without breaking navigation
-                document.querySelectorAll('.hero, #expertise, #results, #work, #contact').forEach(el => {
+                document.querySelectorAll('.hero, #about, #expertise, #results, #work, #contact').forEach(el => {
                     sectionBounds.push({ id: el.classList.contains('hero') ? 'top' : el.id, top: el.getBoundingClientRect().top + window.scrollY, bottom: el.getBoundingClientRect().bottom + window.scrollY });
                 });
             };
@@ -1905,9 +2038,12 @@
             if (!prefersReducedMotion) {
                 gsap.to('.hero-title:not(.outline)', { y: -100, opacity: 0, scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
                 gsap.to('.hero-title.outline', { y: 100, opacity: 0, scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-                gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' });
-                // New Results Animation
+                
+                // Updated triggers for the separated cards
+                gsap.from('#about .about-card', { scrollTrigger: { trigger: '#about', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
+                gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' });
                 gsap.from('.results-wrapper', { scrollTrigger: { trigger: '#results', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
+                gsap.from('#about-me .about-card', { scrollTrigger: { trigger: '#about-me', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
             }
         });
     </script>
