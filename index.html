@@ -1,2051 +1,354 @@
 <!DOCTYPE html>
-<html lang="en" class="sr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bill.K.Films | Motion Design & Social Media</title>
-    <meta name="description" content="High-impact promotion viral videos, animated event flyers, and visual storytelling tailored for the modern digital landscape.">
-    <meta name="theme-color" content="#050505">
-    
-    <!-- Favicon / Site Icon (Search Engine & Multi-Device Optimized) -->
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
-    <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
-
-    <!-- Preconnect for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
-
-    <!-- External Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
-
-    <style>
-        /* ==========================================================================
-           1. CSS VARIABLES & RESET
-           ========================================================================== */
-        :root {
-            --bg-color: #050505;
-            --bg-surface: #111111;
-            --bg-surface-hover: #161616;
-            --text-main: #F4F4F4;
-            --text-muted: #888888;
-            --neon-accent: #FF0055; 
-            --neon-secondary: #00FFCC; 
-            --font-head: 'Anton', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            --ease-out: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-            --spacing-section: clamp(4rem, 8vw, 8rem);
-        }
-
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: none;
-        }
-
-        html.sr {
-            scroll-behavior: initial;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.5;
-        }
-
-        a { color: inherit; text-decoration: none; }
-        ul, ol { list-style: none; }
-        img, video { max-width: 100%; display: block; height: auto; }
-        button { background: none; border: none; font: inherit; color: inherit; cursor: none; }
-        
-        strong {
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; border: 2px solid var(--bg-color); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--neon-accent); }
-
-        /* Accessibility: Focus Outline */
-        :focus-visible {
-            outline: 2px solid var(--neon-accent);
-            outline-offset: 4px;
-            border-radius: 2px;
-        }
-
-        /* ==========================================================================
-           2. GLOBAL EFFECTS & CUSTOM CURSOR
-           ========================================================================== */
-        .noise {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0.035;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        .scroll-progress-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: transparent;
-            z-index: 10001;
-            pointer-events: none;
-        }
-
-        .scroll-progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--neon-accent), var(--neon-secondary));
-            box-shadow: 0 0 10px var(--neon-accent);
-            will-change: width;
-        }
-
-        .cursor {
-            position: fixed;
-            left: 0; top: 0;
-            width: 16px; height: 16px;
-            background-color: var(--neon-accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 999999;
-            transform: translate(-50%, -50%) scale(1);
-            transition: width 0.25s var(--ease-out), height 0.25s var(--ease-out), background-color 0.25s, border-color 0.25s;
-            mix-blend-mode: difference;
-            will-change: transform;
-        }
-
-        .cursor.hover-active {
-            width: 48px; height: 48px;
-            background-color: rgba(255, 0, 85, 0.15);
-            border: 1px solid var(--neon-accent);
-        }
-
-        .cursor.hover-video {
-            width: 60px; height: 60px;
-            background-color: transparent;
-            border: 2px solid rgba(244, 244, 244, 0.9);
-            mix-blend-mode: normal;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-
-        .cursor.hover-video::after {
-            content: 'PLAY';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: var(--font-head);
-            font-size: 11px;
-            letter-spacing: 2px;
-            color: var(--text-main);
-        }
-
-        .glitch { position: relative; display: inline-block; }
-        .glitch:hover::before {
-            content: attr(data-text);
-            position: absolute;
-            left: -2px;
-            text-shadow: 2px 0 var(--neon-accent), -2px 0 var(--neon-secondary);
-            overflow: hidden;
-            clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
-            animation: glitch-anim 0.4s cubic-bezier(.25, .46, .45, .94) both infinite;
-            color: var(--text-main);
-            z-index: 1;
-        }
-
-        @keyframes glitch-anim {
-            0% { clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%); transform: translate(1px, -1px); }
-            50% { clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); transform: translate(-1px, 2px); }
-            100% { clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%); transform: translate(1px, -1px); }
-        }
-
-        /* ==========================================================================
-           3. LAYOUT & TYPOGRAPHY
-           ========================================================================== */
-        .container {
-            width: 100%;
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 0 5vw;
-        }
-
-        section { padding: var(--spacing-section) 0; }
-        
-        #about { padding-bottom: calc(var(--spacing-section) / 2); }
-        #expertise { padding-bottom: calc(var(--spacing-section) / 2); }
-        
-        #work { 
-            padding-top: calc(var(--spacing-section) / 2);
-            padding-bottom: clamp(6rem, 10vw, 12rem); 
-        }
-
-        #about-me { 
-            padding-top: calc(var(--spacing-section) / 2); 
-            padding-bottom: clamp(4rem, 8vw, 8rem); 
-        }
-
-        .section-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-bottom: calc(var(--spacing-section) * 0.7);
-        }
-
-        #work .section-header { margin-bottom: 2rem; }
-
-        .section-subtitle {
-            color: var(--neon-accent);
-            font-size: 0.85rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-
-        .section-title {
-            font-family: var(--font-head);
-            font-size: clamp(2.5rem, 6vw, 5.5rem);
-            line-height: 1.05;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            word-spacing: 0.08em;
-        }
-
-        .section-intro-text {
-            color: var(--text-muted);
-            line-height: 1.8;
-            font-size: 1.1rem;
-            font-weight: 300;
-            max-width: 800px;
-            margin-top: 1.5rem;
-            text-align: center;
-        }
-
-        .content-wrapper-narrow {
-            max-width: 800px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* ==========================================================================
-           4. NAVIGATION
-           ========================================================================== */
-        nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: clamp(1rem, 3vw, 1.5rem) 5vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background: linear-gradient(to bottom, rgba(5,5,5,0.98) 0%, rgba(5,5,5,0.7) 60%, transparent 100%);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: transform 0.4s var(--ease-out);
-            will-change: transform;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            z-index: 2;
-        }
-        
-        .logo img {
-            height: clamp(25px, 4vw, 36px);
-            width: auto;
-            object-fit: contain;
-            transition: transform 0.3s var(--ease-out);
-        }
-
-        .logo:hover img {
-            transform: scale(1.05);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: clamp(1rem, 4vw, 3rem);
-            align-items: center;
-        }
-
-        .nav-item {
-            position: relative;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: clamp(0.75rem, 2vw, 0.85rem);
-            letter-spacing: 1.5px;
-            padding: 0.5rem 0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            overflow: hidden;
-            transition: color 0.3s var(--ease-out);
-        }
-
-        .nav-item-icon {
-            font-size: 0.9rem;
-            color: var(--neon-accent);
-            transform: translateY(-150%);
-            opacity: 0;
-            transition: transform 0.4s var(--ease-out-expo), opacity 0.4s;
-            display: inline-block;
-            will-change: transform, opacity;
-        }
-
-        .nav-item::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 2px;
-            background: var(--neon-accent);
-            transform: translateX(-101%);
-            transition: transform 0.4s var(--ease-out-expo);
-            will-change: transform;
-        }
-
-        .nav-item:hover, .nav-item.active { color: #FFF; }
-        .nav-item:hover::after, .nav-item.active::after { transform: translateX(0); }
-        .nav-item:hover .nav-item-icon, .nav-item.active .nav-item-icon {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .nav-contact { color: var(--neon-accent); }
-        .nav-contact::after { background: var(--text-main); }
-        .nav-contact .nav-item-icon { color: var(--text-main); }
-
-        /* ==========================================================================
-           5. HERO SECTION
-           ========================================================================== */
-        .hero {
-            height: 100vh;
-            height: 100dvh;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            padding: 0 5vw;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            z-index: -2;
-            background: #000;
-        }
-
-        .hero-bg video {
-            width: 100%; height: 100%; object-fit: cover;
-            opacity: 0.3;
-            transform: scale(1.05);
-            will-change: transform;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.7) 60%, var(--bg-color) 100%);
-            z-index: -1;
-        }
-
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 1;
-            width: 100%;
-        }
-
-        .hero-title {
-            font-family: var(--font-head);
-            font-size: clamp(2.5rem, 10vw, 10rem);
-            line-height: 0.95;
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            will-change: transform, opacity;
-            margin: 0;
-        }
-
-        .hero-title.outline {
-            color: transparent;
-            -webkit-text-stroke: 1.5px rgba(244, 244, 244, 0.7);
-        }
-
-        .hero-subtitle {
-            font-size: clamp(0.9rem, 1.2vw, 1.15rem);
-            color: var(--text-muted);
-            max-width: 600px;
-            margin-top: 2.5rem;
-            line-height: 1.7;
-            font-weight: 400;
-        }
-
-        /* ==========================================================================
-           5.5 ABOUT CARDS
-           ========================================================================== */
-        .about-card {
-            background: var(--bg-surface);
-            padding: 3.5rem 3rem;
-            border: 1px solid rgba(255,255,255,0.04);
-            border-radius: 16px;
-            transition: transform 0.5s var(--ease-out-expo), border-color 0.5s, background-color 0.5s, box-shadow 0.5s;
-            will-change: transform;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-
-        .about-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 0, 85, 0.3);
-            background: var(--bg-surface-hover);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 0, 85, 0.05);
-        }
-
-        .about-card-title {
-            font-family: var(--font-head);
-            font-size: 2rem;
-            margin-bottom: 1.2rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--text-main);
-        }
-
-        .about-card p {
-            color: var(--text-muted);
-            line-height: 1.75;
-            font-size: 1rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
-        }
-
-        .about-card p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* ==========================================================================
-           6. EXPERTISE SECTION
-           ========================================================================== */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .service-card {
-            background: var(--bg-surface);
-            padding: 3.5rem 3rem;
-            border: 1px solid rgba(255,255,255,0.04);
-            border-radius: 16px;
-            transition: transform 0.5s var(--ease-out-expo), border-color 0.5s, background-color 0.5s, box-shadow 0.5s;
-            will-change: transform;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px) translateZ(0);
-            border-color: rgba(255, 0, 85, 0.3);
-            background: var(--bg-surface-hover);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 0, 85, 0.05);
-        }
-
-        .service-icon {
-            color: var(--neon-accent);
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            font-family: var(--font-head);
-            letter-spacing: 1px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .service-title {
-            font-family: var(--font-head);
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .service-desc {
-            color: var(--text-muted);
-            line-height: 1.7;
-            font-size: 1rem;
-            font-weight: 300;
-        }
-
-        /* ==========================================================================
-           6.5 RESULTS SECTION
-           ========================================================================== */
-        #results {
-            padding-bottom: calc(var(--spacing-section) / 2);
-        }
-
-        .results-wrapper {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 4rem;
-            align-items: center;
-            background: var(--bg-surface);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 24px;
-            padding: 4rem;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .results-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle at center, rgba(255,0,85,0.04) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .results-content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .results-metric {
-            font-family: var(--font-head);
-            font-size: clamp(3rem, 6vw, 5.5rem);
-            line-height: 1;
-            color: transparent;
-            -webkit-text-stroke: 1.5px var(--neon-accent);
-            text-shadow: 0 0 20px rgba(255,0,85,0.1);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-
-        .results-project-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .results-project-title {
-            font-family: var(--font-head);
-            font-size: clamp(2rem, 4vw, 2.8rem);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-main);
-            line-height: 1.1;
-        }
-
-        .results-project-tags {
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: var(--neon-secondary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .results-desc {
-            color: var(--text-muted);
-            line-height: 1.8;
-            font-size: 1.05rem;
-            font-weight: 300;
-            max-width: 95%;
-        }
-
-        .results-media-container {
-            position: relative;
-            z-index: 1;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.06);
-            aspect-ratio: 4 / 5;
-            width: 100%;
-            max-width: 420px;
-            margin: 0 auto;
-            transform: translateZ(0);
-        }
-
-        .results-media-container video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none; /* Keeps the experience cinematic without accidental clicking/pausing */
-        }
-
-        /* ==========================================================================
-           7. PORTFOLIO SECTION (PREMIUM GRID & CONTROLS)
-           ========================================================================== */
-        .portfolio-filters {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 4rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            font-family: var(--font-body);
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            padding: 0.6rem 1.5rem;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 30px;
-            transition: color 0.3s, border-color 0.3s, background-color 0.3s;
-            cursor: none; 
-            background: var(--bg-surface);
-        }
-
-        .filter-btn:hover, .filter-btn:focus-visible {
-            color: var(--text-main);
-            border-color: rgba(255, 0, 85, 0.3);
-        }
-
-        .filter-btn.active {
-            color: var(--text-main);
-            border-color: var(--neon-accent);
-            background: rgba(255, 0, 85, 0.1);
-        }
-
-        /* Premium Uniform Layout */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-            width: 100%;
-        }
-
-        .project-card {
-            position: relative;
-            background: var(--bg-surface);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.06);
-            will-change: transform, opacity, box-shadow;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo), border-color 0.5s;
-            display: block;
-            z-index: 1;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            
-            /* Enforcing uniform aspect ratio for a curated premium look */
-            aspect-ratio: 4 / 5;
-            width: 100%; 
-            margin: 0;
-        }
-
-        .hidden-project {
-            display: none !important;
-        }
-
-        .load-more-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5rem;
-            margin-top: 3.5rem;
-            width: 100%;
-        }
-
-        .load-more-btn, .show-less-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            font-family: var(--font-body);
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            transition: color 0.3s, transform 0.3s var(--ease-out-expo);
-            background: none;
-            border: none;
-            cursor: none;
-        }
-
-        .load-more-btn:hover, .load-more-btn:focus-visible,
-        .show-less-btn:hover, .show-less-btn:focus-visible {
-            color: var(--neon-accent);
-            transform: translateY(-5px);
-        }
-
-        .load-more-arrow, .show-less-arrow {
-            width: 28px;
-            height: 28px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .load-more-arrow {
-            animation: floatArrow 2s infinite ease-in-out;
-        }
-
-        .show-less-arrow {
-            animation: floatArrowUp 2s infinite ease-in-out;
-        }
-
-        @keyframes floatArrow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(6px); }
-        }
-
-        @keyframes floatArrowUp {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-        
-        .project-media {
-            position: absolute;
-            inset: 0;
-            background-color: #1a1a1a;
-            z-index: 1;
-        }
-
-        .project-media img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 1s var(--ease-out-expo), opacity 0.5s var(--ease-out);
-            will-change: transform, opacity;
-        }
-
-        .project-media video {
-            position: absolute;
-            inset: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.5s var(--ease-out);
-            will-change: opacity;
-            pointer-events: none;
-        }
-
-        .project-info {
-            position: absolute;
-            bottom: 0; left: 0; width: 100%;
-            padding: 6rem 2rem 2rem;
-            background: linear-gradient(to top, rgba(5,5,5,1) 0%, rgba(5,5,5,0.6) 60%, transparent 100%);
-            transform: translateY(20px);
-            opacity: 0;
-            transition: transform 0.5s var(--ease-out-expo), opacity 0.5s;
-            z-index: 10;
-            display: flex;
-            align-items: flex-end; 
-            will-change: transform, opacity;
-        }
-        
-        .project-title {
-            font-family: var(--font-head);
-            font-size: 2.2rem;
-            line-height: 1.1;
-            text-transform: uppercase;
-            color: var(--text-main);
-            margin: 0; 
-            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
-            letter-spacing: 0.5px;
-        }
-
-        /* Desktop Fine-Pointer Hover Rules Only */
-        @media (hover: hover) and (pointer: fine) {
-            .project-card:hover, .project-card:focus-visible {
-                transform: translateY(-8px) scale(1.02) translateZ(0);
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 45px rgba(255, 0, 85, 0.3);
-                border-color: rgba(255, 255, 255, 0.15);
-            }
-
-            .project-card:hover .project-media img, .project-card:focus-visible .project-media img {
-                opacity: 0; 
-            }
-
-            .project-card.has-video:hover .project-media img, .project-card.has-video:focus-visible .project-media img {
-                opacity: 0; 
-            }
-
-            .project-card:hover .project-media video, .project-card:focus-visible .project-media video {
-                opacity: 1;
-            }
-
-            .project-card:hover .project-info, .project-card:focus-visible .project-info {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Mobile Touch Device Overrides for Grid Cards */
-        @media (hover: none) or (pointer: coarse), (max-width: 768px) {
-            .project-card .project-media img {
-                opacity: 1 !important;
-                transform: none !important;
-            }
-            .project-card .project-media video {
-                opacity: 0 !important;
-                display: none !important;
-            }
-            .project-info {
-                opacity: 1 !important;
-                transform: translateY(0) !important;
-            }
-        }
-
-        /* ==========================================================================
-           8. VIDEO/IMAGE MODAL & NAVIGATORS
-           ========================================================================== */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(5, 5, 5, 0.98);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 9000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s var(--ease-out);
-        }
-
-        .modal.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 2rem; right: 4vw;
-            background: transparent;
-            padding: 1rem;
-            border: none;
-            color: var(--text-main);
-            font-family: var(--font-head);
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            z-index: 9020;
-            transition: color 0.3s, transform 0.3s var(--ease-out-expo);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .modal-close:hover, .modal-close:focus-visible {
-            color: var(--neon-accent);
-            transform: scale(1.05) translateZ(0);
-        }
-
-        .modal-loader {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 48px; height: 48px;
-            border: 4px solid rgba(255,255,255,0.1);
-            border-top-color: var(--neon-accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            z-index: 10; 
-            opacity: 0;
-            transition: opacity 0.3s var(--ease-out);
-            pointer-events: none;
-        }
-        
-        .modal-loader.active {
-            opacity: 1;
-        }
-
-        @keyframes spin {
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        /* Desktop Modal Specifics */
-        .modal-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(17, 17, 17, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9010;
-            transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.3s var(--ease-out-expo);
-        }
-
-        .modal-nav-btn:hover, .modal-nav-btn:focus-visible {
-            background: var(--bg-surface-hover);
-            border-color: var(--neon-accent);
-            color: var(--neon-accent);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .modal-prev { left: 3vw; }
-        .modal-next { right: 3vw; }
-        
-        .modal-video-container {
-            height: 85vh;
-            height: 85dvh;
-            width: 75vw;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            transform: scale(0.95);
-            transition: transform 0.5s var(--ease-out-expo);
-        }
-
-        .modal.active .modal-video-container {
-            transform: scale(1);
-        }
-
-        .modal-video-container video, .modal-video-container img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255,255,255,0.1);
-            outline: none;
-            z-index: 2;
-        }
-
-        .modal-mobile-wrapper {
-            display: none; 
-        }
-
-        /* ==========================================================================
-           9. FOOTER / CONTACT
-           ========================================================================== */
-        footer {
-            padding: 5rem 5vw 4rem; 
-            text-align: center;
-            position: relative;
-            background: var(--bg-surface);
-            border-top: 1px solid rgba(255,255,255,0.03);
-            overflow: hidden;
-        }
-
-        .footer-glow {
-            position: absolute;
-            bottom: -50%; left: 50%;
-            transform: translateX(-50%);
-            width: 80vw; height: 500px;
-            background: radial-gradient(ellipse at center, rgba(255,0,85,0.12) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .footer-header {
-            margin-bottom: 3.5rem; 
-        }
-
-        .contact-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 3.5rem;
-            flex-wrap: wrap; 
-            margin-top: 0; 
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 3.5rem; 
-            position: relative;
-            z-index: 1;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            font-family: var(--font-body);
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            transition: color 0.4s, transform 0.4s var(--ease-out-expo);
-            text-decoration: none;
-            padding: 1rem;
-        }
-
-        .contact-item:hover, .contact-item:focus-visible {
-            color: var(--text-main);
-            transform: translateY(-5px) translateZ(0);
-        }
-
-        .contact-icon {
-            width: 26px;
-            height: 26px;
-            fill: none;
-            stroke: var(--neon-accent);
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: stroke 0.4s, transform 0.4s var(--ease-out-expo);
-        }
-
-        .contact-item:hover .contact-icon, .contact-item:focus-visible .contact-icon {
-            stroke: var(--text-main);
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .footer-copyright {
-            margin-top: 3.5rem; 
-            font-size: 0.85rem;
-            color: #555;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ==========================================================================
-           10. MEDIA QUERIES & MOBILE MODAL 
-           ========================================================================== */
-        
-        @media (max-width: 1024px) {
-            .results-wrapper { padding: 3rem; gap: 3rem; grid-template-columns: 1fr 1fr; }
-            .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-        }
-
-        @media (max-width: 768px) {
-            :root { --spacing-section: 5rem; } 
-            
-            /* Responsive Hero Text Fix */
-            .hero-content { width: 100%; display: flex; flex-direction: column; align-items: center; }
-            .hero-title { font-size: 14vw; line-height: 1.05; letter-spacing: -1px; width: 100%; text-align: center; }
-            .hero-title.outline { font-size: 8vw; margin-top: 0.5rem; -webkit-text-stroke: 1px rgba(244, 244, 244, 0.8); }
-
-            .about-card { padding: 2.5rem 1.5rem; }
-            .services-grid { grid-template-columns: 1fr; }
-            
-            /* Responsive Results Update */
-            .results-wrapper { grid-template-columns: 1fr; padding: 2.5rem 1.5rem; gap: 2.5rem; }
-            .results-metric { font-size: 14vw; }
-            .results-desc { max-width: 100%; font-size: 0.95rem; }
-            .results-project-title { font-size: 2.2rem; }
-            .results-media-container { max-width: 100%; }
-
-            .portfolio-filters { gap: 0.5rem; margin-bottom: 2.5rem; }
-            .filter-btn { font-size: 0.75rem; padding: 0.5rem 1rem; }
-
-            .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-            
-            .project-info { opacity: 1; transform: translateY(0); padding: 3.5rem 1.5rem 1.5rem; }
-            
-            .contact-container { flex-direction: column; gap: 2rem; padding-top: 2.5rem; }
-            .nav-item-icon { display: none; } 
-            
-            /* Hide Desktop Elements */
-            #modalVideoContainer, .modal-nav-btn { display: none !important; }
-
-            /* Mobile Modal Specifics */
-            #modalMobileWrapper {
-                display: block;
-                position: absolute;
-                inset: 0;
-                width: 100vw;
-                height: 100vh;
-                height: 100dvh;
-                overflow: hidden;
-                touch-action: none;
-                background: #000;
-            }
-
-            .m-slide {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: #000; 
-            }
-
-            .m-media-img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                z-index: 2;
-                display: none;
-            }
-
-            .m-media-vid {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                z-index: 3;
-                display: block;
-            }
-
-            .m-loader-mobile {
-                position: absolute;
-                top: 50%; left: 50%;
-                transform: translate(-50%, -50%);
-                width: 40px; height: 40px;
-                border: 3px solid rgba(255,255,255,0.1);
-                border-top-color: var(--neon-accent);
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-                display: none;
-                z-index: 10;
-            }
-        }
-
-        @media (max-width: 480px) {
-            :root { --spacing-section: 4rem; }
-            
-            .portfolio-grid { grid-template-columns: 1fr; gap: 1.5rem; } 
-            .project-card { width: 100%; height: auto; }
-            
-            .hero-subtitle { margin-top: 1.5rem; font-size: 0.95rem; }
-            .project-info { padding: 3rem 1.2rem 1.2rem; }
-            .project-title { font-size: 1.6rem; }
-            .contact-container { gap: 1.5rem; }
-            .contact-item { font-size: 0.95rem; }
-            .footer-header .section-title { font-size: 2.5rem; }
-        }
-
-        @media (hover: none) and (pointer: coarse) {
-            *, *::before, *::after { cursor: auto !important; }
-            .cursor { display: none !important; }
-            .project-card:active { transform: scale(0.98); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-            .noise, .cursor { display: none !important; }
-            .glitch:hover::before { animation: none; }
-            .project-info { opacity: 1; transform: translateY(0); }
-            .nav-item-icon { transform: translateY(0); opacity: 1; }
-            .load-more-arrow, .show-less-arrow { animation: none !important; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bill.K.Films | Motion Design & Social Media</title>
+<meta name="description" content="High-impact promotion viral videos, animated event flyers, and visual storytelling tailored for the modern digital landscape.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{--bg:#050505;--sf:#0e0e11;--tx:#f4f4f4;--mu:#8c8c94;--pk:#ff0055;--cy:#00ffcc;--hd:'Anton',Impact,sans-serif;--bd:'Inter',system-ui,sans-serif;--ex:cubic-bezier(.19,1,.22,1);--pad:5vw}
+*,::before,::after{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--bg)}html.cur *{cursor:none!important}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-stopped{overflow:hidden}
+body{background:var(--bg);color:var(--tx);font:400 1rem/1.6 var(--bd);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{all:unset;cursor:pointer;box-sizing:border-box}[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--pk);outline-offset:4px}
+img,video{display:block;max-width:100%}
+.noise{position:fixed;inset:0;pointer-events:none;z-index:8000;opacity:.04;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+#pb{position:fixed;left:0;top:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--pk),var(--cy));z-index:8500}
+.cr,.cd{position:fixed;left:0;top:0;pointer-events:none;z-index:9999;display:none;opacity:0}
+.cur .cr,.cur .cd{display:grid}
+.cr{width:34px;height:34px;margin:-17px 0 0 -17px;border:1px solid rgba(255,255,255,.55);border-radius:50%;place-items:center;transition:width .4s var(--ex),height .4s var(--ex),margin .4s var(--ex),background .3s,opacity .3s}
+.cr::after{content:attr(data-l);font:400 .8rem var(--hd);letter-spacing:.12em;text-transform:uppercase;color:#fff}
+.cr.on{width:84px;height:84px;margin:-42px 0 0 -42px;background:var(--pk);border-color:var(--pk)}
+.cr.sm{width:56px;height:56px;margin:-28px 0 0 -28px;border-color:var(--pk)}
+.cd{width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--pk)}
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:7000;display:flex;justify-content:space-between;align-items:center;padding:1.1rem var(--pad);transition:transform .7s var(--ex)}
+.nav.hide{transform:translateY(-110%)}.nav img{height:44px;width:auto}
+.nav::before{content:"";position:absolute;inset:0 0 -1.4rem;z-index:-1;pointer-events:none;background:linear-gradient(rgba(5,5,5,.62),rgba(5,5,5,.28) 65%,rgba(5,5,5,0));-webkit-backdrop-filter:blur(14px) saturate(1.15);backdrop-filter:blur(14px) saturate(1.15);-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+.nav ul{display:flex;gap:clamp(1rem,2.6vw,2.6rem);list-style:none;font-size:.9rem;font-weight:600}
+.nav a.l{position:relative;padding:.3rem 0}.nav a.l::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--pk);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ex)}
+.nav a.l:hover::after{transform:scaleX(1);transform-origin:left}.nav .ct{color:var(--pk)}
+/* hero */
+.hero{position:relative;height:100svh;min-height:600px;overflow:hidden}
+.hbg{position:absolute;inset:0;opacity:.24}.hbg video{width:100%;height:100%;object-fit:cover}
+.hbg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 0,var(--bg) 80%)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:38%;background:linear-gradient(transparent,var(--bg));z-index:3;pointer-events:none}
+.hl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;font:400 clamp(4rem,12.4vw,15rem)/.92 var(--hd);text-transform:uppercase;pointer-events:none;text-align:center;padding-bottom:4vh}
+.hl .r{display:flex;gap:.25em;justify-content:center}
+.hl.b{z-index:1}.hl.f{z-index:3;-webkit-text-fill-color:transparent;-webkit-text-stroke:1.5px var(--pk)}
+.w{display:inline-block;overflow:hidden;padding:.08em .06em;white-space:nowrap}.w>i{display:block;font-style:normal}
+.js .w>i{opacity:0}
+#gl{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+.hi{position:absolute;z-index:4;left:var(--pad);right:var(--pad);bottom:clamp(1.4rem,4vh,3rem);display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;pointer-events:none}
+.hi p{max-width:27rem;color:#c4c4cb;font-size:clamp(.85rem,1.05vw,1rem)}
+/* shared */
+.c{max-width:1500px;margin:0 auto;padding:0 var(--pad)}
+section{padding:clamp(5rem,11vw,11rem) 0}
+.t{font:400 clamp(3rem,9vw,9rem)/.95 var(--hd);text-transform:uppercase}
+.mu{color:var(--mu)}
+#pre{position:fixed;inset:0;z-index:9998;background:var(--bg);display:none;place-items:center;font:400 clamp(3rem,10vw,9rem)/1 var(--hd);letter-spacing:.02em}
+.js #pre{display:grid}#pre span{position:absolute;left:var(--pad);bottom:4vh;font-size:clamp(2rem,6vw,5rem);color:var(--pk)}
+/* stats */
+.sts{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid #1d1d21}
+.sts div{padding:clamp(1.8rem,4vw,3.4rem) 0 clamp(1.8rem,4vw,3.4rem) 2vw;border-left:1px solid #1d1d21}.sts div:first-child{border:0;padding-left:0}
+.sts b{display:block;font:400 clamp(2.8rem,7vw,6.5rem)/1 var(--hd)}.sts small{color:var(--mu);font-size:.9rem}
+/* studio */
+.stm{font:600 clamp(1.7rem,4.2vw,4rem)/1.18 var(--bd);letter-spacing:-.02em;max-width:22em}.stm span{opacity:.16}
+.two{display:grid;grid-template-columns:5fr 7fr;gap:5vw;margin-top:clamp(3rem,7vw,7rem)}.two p{color:#b4b4bb;max-width:38rem;margin-bottom:1.2rem}
+.two p:first-child,.big{font-size:clamp(1.15rem,1.7vw,1.5rem);color:var(--tx);line-height:1.45}
+/* services */
+.sh{display:grid;grid-template-columns:5fr 7fr;gap:5vw;align-items:end;margin-bottom:clamp(2.5rem,6vw,5rem)}.sh p{color:var(--mu);max-width:42rem}
+.sl{list-style:none;border-top:1px solid #222}.sv{border-bottom:1px solid #222}
+.sb{display:flex;width:100%;justify-content:space-between;align-items:center;padding:1.1rem 0}
+.st{font:400 clamp(2.2rem,6vw,5.5rem)/1 var(--hd);text-transform:uppercase;transition:color .4s,transform .7s var(--ex)}
+.si{font:300 2.2rem/1 var(--bd);color:var(--mu);transition:transform .6s var(--ex),color .4s}
+.sd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s var(--ex)}.sd>div{overflow:hidden}.sd p{max-width:40rem;color:var(--mu);padding:0 0 1.8rem}
+.sv.o .sd{grid-template-rows:1fr}.sv.o .st{color:var(--pk);transform:translateX(1.4vw)}.sv.o .si{transform:rotate(45deg);color:var(--pk)}
+/* tilt frames */
+.ts{perspective:1200px}
+.tf{position:relative;border-radius:6px;box-shadow:0 50px 110px -40px rgba(255,0,85,.4)}
+.in{position:absolute;inset:0;overflow:hidden;border-radius:inherit;background:#111}
+.in img,.in video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.in::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,25%),rgba(255,255,255,.18),transparent 55%);pointer-events:none}
+/* results */
+.rs{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:.6rem;border:1px solid var(--pk);color:var(--pk);padding:.35rem 1rem;border-radius:99px;font-weight:600;font-size:.85rem}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--pk);animation:pu 1.4s infinite}
+@keyframes pu{0%{box-shadow:0 0 0 0 rgba(255,0,85,.7)}100%{box-shadow:0 0 0 9px rgba(255,0,85,0)}}
+.rs h3{font:400 clamp(3rem,7vw,6.5rem)/1 var(--hd);text-transform:uppercase;margin:1.4rem 0 .4rem}.rs .tg{color:var(--cy);font-weight:600;margin-bottom:1.4rem}.rs p{color:#b4b4bb;max-width:34rem}
+.rs .tf{aspect-ratio:4/5;width:100%;max-width:30rem;margin:0 auto}
+/* work */
+.wh{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:clamp(2rem,5vw,4rem)}
+.fl{display:flex;gap:.6rem;flex-wrap:wrap}.fb{border:1px solid #2a2a30;border-radius:99px;padding:.5rem 1.15rem;font-size:.88rem;font-weight:600;color:var(--mu);transition:.3s}
+.fb:hover{color:var(--tx);border-color:#555}.fb.on{background:var(--tx);color:#000;border-color:var(--tx)}
+.wk{display:grid;grid-template-columns:1.15fr .85fr;gap:5vw;align-items:start}
+.rows{list-style:none;border-top:1px solid #222}.rows li{border-bottom:1px solid #222}
+.row{display:flex;width:100%;align-items:center;gap:1.2rem;padding:1.05rem 0;transition:opacity .4s,transform .7s var(--ex)}
+.rn{font:400 clamp(1.9rem,4.3vw,4.2rem)/1.05 var(--hd);text-transform:uppercase;color:#6c6c74;transition:color .3s;flex:1}
+.rc{color:var(--mu);font-size:.85rem}.rt{display:none}
+@media(hover:hover){.rows:hover .row{opacity:.3}.rows .row:hover{opacity:1;transform:translateX(1.2vw)}.row:hover .rn{color:var(--tx)}}.rows .row:focus-visible{opacity:1;transform:translateX(1.2vw)}.row:focus-visible .rn{color:var(--tx)}
+.stg{position:sticky;top:14vh;perspective:1200px;display:grid;justify-items:center}
+.stg .tf{width:min(100%,calc(min(66vh,34rem)*var(--a,.8)));aspect-ratio:var(--a,.8)}
+.stg .in{clip-path:inset(0)}
+.cap{margin-top:1.4rem;color:var(--mu);font-size:.85rem;text-align:center}
+/* creator + footer */
+.cre p{color:#b4b4bb;max-width:40rem;margin-bottom:1.2rem}.cre p:first-of-type{color:var(--tx)}
+footer{position:relative;overflow:hidden;padding:clamp(5rem,12vw,12rem) 0 2rem;border-top:1px solid #1d1d21}
+footer::before{content:"";position:absolute;left:50%;bottom:-30vw;width:90vw;height:60vw;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(255,0,85,.28),transparent);pointer-events:none}
+footer .t{font-size:clamp(4rem,15vw,15rem)}
+.mail{display:inline-block;margin:clamp(1.5rem,3vw,3rem) 0;font:600 clamp(1.3rem,3.6vw,3.4rem)/1.2 var(--bd);letter-spacing:-.02em;border-bottom:2px solid var(--pk);padding-bottom:.2rem}
+.soc{display:flex;gap:2.5rem;flex-wrap:wrap;margin-bottom:clamp(3rem,8vw,7rem)}.soc a{color:var(--mu);transition:color .3s}.soc a:hover{color:var(--tx)}.soc b{display:block;color:var(--tx);font-weight:600}
+.cp{color:var(--mu);font-size:.8rem;position:relative}
+/* modal */
+.md{position:fixed;inset:0;z-index:9000;background:rgba(5,5,5,.95);backdrop-filter:blur(14px);display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+.md.on{opacity:1;visibility:visible}
+#mv{max-width:min(92vw,1100px);max-height:74vh;border-radius:6px;background:#000;transform:scale(.94);transition:transform .8s var(--ex)}.md.on #mv{transform:none}
+.mb{position:absolute;display:flex;align-items:center;gap:.6rem;font-weight:600;font-size:.9rem;padding:.6rem 1rem;border:1px solid #333;border-radius:99px;transition:.3s}.mb:hover{background:var(--pk);border-color:var(--pk)}
+#mx{top:1.4rem;right:var(--pad)}#mp{bottom:1.6rem;left:var(--pad)}#mn{bottom:1.6rem;right:var(--pad)}
+.mi{position:absolute;bottom:1.7rem;left:50%;transform:translateX(-50%);text-align:center;line-height:1.3}.mi b{font:400 1.5rem var(--hd);text-transform:uppercase;display:block}.mi span{color:var(--mu);font-size:.85rem}
+@media(max-width:900px){
+.nav img{height:34px}.nav ul{font-size:.78rem;gap:.9rem}
+.two,.sh,.rs,.wk{grid-template-columns:1fr}.stg{display:none}
+.row{padding:.8rem 0}.rt{display:block;width:56px;height:56px;object-fit:cover;border-radius:4px}.rc{display:none}.rows:hover .row{opacity:1}#work .t .w{padding:.03em 0}
+.hl{font-size:var(--fs,clamp(4rem,12.4vw,15rem))}
+.sts small{font-size:.75rem}.mi{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}}
+</style>
 </head>
 <body>
-
-    <!-- Decorative Elements -->
-    <div class="noise" aria-hidden="true"></div>
-    <div class="cursor" id="cursor" aria-hidden="true"></div>
-
-    <!-- Scroll Progress Indicator Bar -->
-    <div class="scroll-progress-container" aria-hidden="true">
-        <div class="scroll-progress-bar" id="scrollProgressBar"></div>
-    </div>
-
-    <!-- Navigation -->
-    <nav id="navbar">
-        <a href="#top" class="logo hover-target" aria-label="Home">
-            <img src="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png" alt="Bill.K.Films Logo">
-        </a>
-        <ul class="nav-links">
-            <li>
-                <a href="#about" class="nav-item hover-target">
-                    About <span class="nav-item-icon" aria-hidden="true">↘</span>
-                </a>
-            </li>
-            <li>
-                <a href="#expertise" class="nav-item hover-target">
-                    Services <span class="nav-item-icon" aria-hidden="true">↘</span>
-                </a>
-            </li>
-            <li>
-                <a href="#work" class="nav-item hover-target">
-                    Work <span class="nav-item-icon" aria-hidden="true">↘</span>
-                </a>
-            </li>
-            <li>
-                <a href="#contact" class="nav-item nav-contact hover-target">
-                    Contact <span class="nav-item-icon" aria-hidden="true">↓</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Main Content -->
-    <main id="top">
-        <!-- Hero Section -->
-        <header class="hero">
-            <div class="hero-bg" aria-hidden="true">
-                <video autoplay loop muted playsinline>
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-dj-playing-music-in-a-club-4332-large.mp4" type="video/mp4">
-                </video>
-            </div>
-            <div class="hero-overlay" aria-hidden="true"></div>
-
-            <div class="hero-content">
-                <h1 class="hero-title glitch" data-text="MOTION DESIGN">MOTION DESIGN</h1>
-                <h2 class="hero-title outline glitch" data-text="& SOCIAL Media">& SOCIAL Media</h2>
-                <p class="hero-subtitle">High-impact promotion viral videos, animated event flyers, and visual storytelling tailored for the modern digital landscape. Crafted for retention, designed for energy.</p>
-            </div>
-        </header>
-
-        <!-- Intro / What Is Bill.K Films? -->
-        <section id="about" class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Vision & Reality</span>
-                <h2 class="section-title">The Studio</h2>
-            </div>
-            
-            <div class="content-wrapper-narrow">
-                <article class="about-card hover-target">
-                    <h3 class="about-card-title">What Is Bill.K Films?</h3>
-                    <p>Bill.K Films is a creative studio with a simple mission: to transform your vision into reality through high-performing videos made for social media.</p>
-                    <p>Founded in early 2026, Bill.K Films focuses on creating high-end promotional content for artists, businesses, and creators who want to stand out and connect with their audience online.
-
-So far, we’ve worked on 11 projects. While only 3 of them have been published on TikTok, those few projects alone have already reached over 150K+ views and traction on the platform, showing the potential of our work to help artists, businesses, and professionals get noticed online.</p>
-                </article>
-            </div>
-        </section>
-
-        <!-- Expertise / Services Section -->
-        <section id="expertise" class="container">
-            <div class="section-header">
-                <span class="section-subtitle">What We Do</span>
-                <h2 class="section-title">Our Services</h2>
-                <p class="section-intro-text">
-                    Bill.K Films offers a variety of services, making it ideal for trappers, rappers, artists, DJs, creators, and business owners looking to elevate their content and reach a wider audience online. We don’t just create basic short-form content, we create high-end promo edits using premium visuals designed to grab people’s attention on the internet. Before starting a project, we analyze the artist’s or business’s style, vision, identity, and goals, incorporating these elements into a unique video that represents them and connects with their audience.
-                </p>
-            </div>
-            
-            <div class="services-grid">
-                <article class="service-card hover-target">
-                    <div class="service-icon" aria-hidden="true">01</div>
-                    <h3 class="service-title">Spotify Canvases</h3>
-                    <p class="service-desc">High-impact animated Spotify canvases designed to turn static track artwork into looping, immersive visual experiences for your listeners.</p>
-                </article>
-
-                <article class="service-card hover-target">
-                    <div class="service-icon" aria-hidden="true">02</div>
-                    <h3 class="service-title">Lyric Videos</h3>
-                    <p class="service-desc">High-end lyric videos featuring dynamic kinetic typography, fluid visual effects, and custom pacing built for maximum view retention.</p>
-                </article>
-
-                <article class="service-card hover-target">
-                    <div class="service-icon" aria-hidden="true">03</div>
-                    <h3 class="service-title">Artist Promos</h3>
-                    <p class="service-desc">Tailored promotional videos for rappers, trappers, DJs, and artists designed to amplify your release and stand out on social media feeds.</p>
-                </article>
-
-                <article class="service-card hover-target">
-                    <div class="service-icon" aria-hidden="true">04</div>
-                    <h3 class="service-title">Animated Flyers</h3>
-                    <p class="service-desc">Transforming static artwork and posters into vibrant motion graphics for club announcements, festival lineups, and event marketing.</p>
-                </article>
-
-                <article class="service-card hover-target">
-                    <div class="service-icon" aria-hidden="true">05</div>
-                    <h3 class="service-title">Storytelling</h3>
-                    <p class="service-desc">Narrative-focused visual edits that highlight your artist identity, brand message, and personal journey to deeply connect with your audience.</p>
-                </article>
-
-                <article class="service-card hover-target">
-                    <div class="service-icon" aria-hidden="true">06</div>
-                    <h3 class="service-title">Club Recaps</h3>
-                    <p class="service-desc">Fast-paced club promo edits and event recaps featuring rhythmic cuts, precision color grading, and high-energy sound design.</p>
-                </article>
-            </div>
-        </section>
-
-        <!-- Results Section -->
-        <section id="results" class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Real Impact</span>
-                <h2 class="section-title">Results</h2>
-            </div>
-            
-            <div class="results-wrapper">
-
-                <!-- 
-                ========================================================================
-                📝 1. CHANGE RESULTS TEXT HERE 
-                Modify the text inside the tags below to update the context of the video.
-                ======================================================================== 
-                -->
-                <div class="results-content">
-                    <div class="results-metric">CURRENTLY VIRAL!</div>
-                    <div class="results-project-info">
-                        <h3 class="results-project-title">Saske Ores</h3>
-                        <span class="results-project-tags">Lyrics Edit / Artist Promo</span>
-                    </div>
-                    <p class="results-desc">
-                        Combining high-end visual effects with dynamic creative editing, this lyrics video achieved significant organic reach on TikTok. The project demonstrates how tailored visuals can capture attention and drive real-world engagement!
-                    </p>
-                </div>
-                
-                <!-- 
-                ========================================================================
-                🎬 2. CHANGE RESULTS VIDEO HERE 🎬
-                To change the video, simply swap the URL in the 'src' attribute of 
-                the <video> tag below. It will automatically play on loop without audio.
-                Changing this URL will not break the website layout or styling.
-                ======================================================================== 
-                -->
-                <div class="results-media-container">
-                    <video src="https://res.cloudinary.com/mhg6b5ne/video/upload/v1787760807/Bts_Ores_Saske_vrgfh8.webm" autoplay loop muted playsinline></video>
-                </div>
-                <!-- ======================================================================== -->
-
-            </div>
-        </section>
-
-        <!-- Portfolio Section -->
-        <section id="work" class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Selected Work</span>
-                <h2 class="section-title">Portfolio</h2>
-            </div>
-            
-            <!-- Category Navigation -->
-            <ul class="portfolio-filters" id="portfolioFilters">
-                <li><button class="filter-btn active" data-filter="All">All</button></li>
-                <li><button class="filter-btn" data-filter="Artist Promo">Artist Promo</button></li>
-                <li><button class="filter-btn" data-filter="Flyers">Flyers</button></li>
-                <li><button class="filter-btn" data-filter="Side Projects">Side Projects</button></li>
-            </ul>
-
-            <div class="portfolio-grid" id="portfolioGrid" role="list">
-                <!-- Javascript will inject projects here -->
-            </div>
-
-            <!-- Load More / Show Less Controls -->
-            <div class="load-more-container" id="loadMoreContainer" style="display: none;">
-                <button class="load-more-btn hover-target" id="loadMoreBtn" aria-label="Load remaining projects">
-                    <span>Load More</span>
-                    <svg class="load-more-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </button>
-                <button class="show-less-btn hover-target" id="showLessBtn" aria-label="Show default grid" style="display: none;">
-                    <span>Show Less</span>
-                    <svg class="show-less-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <polyline points="18 15 12 9 6 15"></polyline>
-                    </svg>
-                </button>
-            </div>
-        </section>
-
-        <!-- About Me Section (Moved to Bottom) -->
-        <section id="about-me" class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Behind the Edits</span>
-                <h2 class="section-title">The Creator</h2>
-            </div>
-            
-            <div class="content-wrapper-narrow">
-                <article class="about-card hover-target">
-                    <h3 class="about-card-title">About Me</h3>
-                    <p>My name is Βασίλης Κολλάρος. I’m an 18-year-old specialized video editor, born and raised in Kaisariani, Athens.</p>
-                    <p>The reason I created Bill.K Films is because I had seen so many talented artists fall behind, not because of their artistic talent, songs, or albums, but because they didn’t have the ability to reach the right audience on social media.</p>
-                    <p>Our mission is to transform your vision into reality by creating visuals and edits that capture attention, build recognition, and help your work get discovered on social media.</p>
-                </article>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer / Contact Section -->
-    <footer id="contact">
-        <div class="footer-glow" aria-hidden="true"></div>
-        <div class="container">
-            <div class="section-header footer-header">
-                <h2 class="section-title">Get In Touch</h2>
-            </div>
-            
-            <address class="contact-container" style="font-style: normal;">
-                <a href="https://www.instagram.com/bill.k.films" target="_blank" rel="noopener noreferrer" class="contact-item hover-target" aria-label="Visit Instagram Profile">
-                    <svg class="contact-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                    <span>@bill.k.films</span>
-                </a>
-
-                <a href="https://www.tiktok.com/@bill.k.films?_r=1&_t=ZN-99BdJsGxo6o" target="_blank" rel="noopener noreferrer" class="contact-item hover-target" aria-label="Visit TikTok Profile">
-                    <svg class="contact-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M21 7.917v4.034a9.948 9.948 0 0 1 -5 -1.951v4.5a6.5 6.5 0 1 1 -8 -6.326v4.326a2.5 2.5 0 1 0 4 2v-11.5h4.083a6.005 6.005 0 0 0 4.917 4.917z"></path>
-                    </svg>
-                    <span>@bill.k.films</span>
-                </a>
-                
-                <a href="mailto:bill.k.films7@gmail.com" class="contact-item hover-target" aria-label="Send an Email">
-                    <svg class="contact-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                    <span>bill.k.films7@gmail.com</span>
-                </a>
-                
-                <a href="tel:+306983697532" class="contact-item hover-target" aria-label="Call Phone Number">
-                    <svg class="contact-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                    </svg>
-                    <span>+30 698 369 7532</span>
-                </a>
-            </address>
-
-            <div class="footer-copyright">
-                &copy; <span id="year"></span> Bill.K.Films. All Rights Reserved.
-            </div>
-        </div>
-    </footer>
-
-    <!-- Universal Video/Image Modal -->
-    <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <span id="modalTitle" class="sr-only" style="display:none;">Project Viewer</span>
-        <button class="modal-close hover-target" id="closeModal" aria-label="Close Modal">
-            CLOSE
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-        </button>
-
-        <!-- DESKTOP CONTAINER -->
-        <button class="modal-nav-btn modal-prev hover-target" id="modalPrevBtn" aria-label="Previous Project">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-        </button>
-        <button class="modal-nav-btn modal-next hover-target" id="modalNextBtn" aria-label="Next Project">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-        </button>
-        <div class="modal-video-container" id="modalVideoContainer">
-            <div class="modal-loader" id="modalLoader"></div>
-        </div>
-
-        <!-- MOBILE CONTAINER -->
-        <div class="modal-mobile-wrapper" id="modalMobileWrapper">
-            <div class="m-slide" id="mSlideSingle">
-                <img class="m-media-img" id="mMediaImg" alt="Project Media">
-                <video class="m-media-vid" id="mMediaVid" loop playsinline></video>
-                <div class="m-loader-mobile" id="mLoaderMobile"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==========================================================================
-         JAVASCRIPT LOGIC
-         ========================================================================== -->
-    <script>
-        // ==========================================================================
-        // PROJECTS — STRICT ORDER & CATEGORIES
-        // ==========================================================================
-        const projects = [
-            {
-                id: "Janice STFU",
-                name: "Janice STFU",
-                category: "Artist Promo",
-                width: 1080,
-                height: 1080,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1792953081/Janice_STFU_x6xtvc.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1792952094/Janice_STFU_Final_rkzmnm.webm"
-            },
-            {
-                id: "p5",
-                name: "Trapper Promo",
-                category: "Artist Promo",
-                width: 1,
-                height: 1,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/Tony_Montana_Light_zhyiso.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036541/Tony_Montana_II_2026_lnqgfc.webm"
-            },
-            {
-                id: "p1",
-                name: "TOQUEL FLYER",
-                category: "Flyers",
-                width: 4,
-                height: 5,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036516/Toquel_V22_wystxs.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036528/Toquel_V22_dpuuw0.webm"
-            },
-            {
-                id: "p6",
-                name: "DJ Flyer",
-                category: "Flyers",
-                width: 4,
-                height: 5,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036519/DJ_SANDA_e7squm.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036664/DJ_Sanda_kp27zq.webm"
-            },
-            {
-                id: "p3",
-                name: "Club Flyer",
-                category: "Flyers",
-                width: 4,
-                height: 5,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036519/JOJO_shznqv.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036604/JoJo_sme8it.webm"
-            },
-            {
-                id: "p4",
-                name: "DJ NAMAR Flyer",
-                category: "Flyers",
-                width: 4,
-                height: 5,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786036515/DJ_Namar_q0qgbe.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786036605/DJ_Namar_u3p9ut.webm"
-            },
-            {
-                id: "mustang-edit",
-                name: "Mustang Edit",
-                category: "Side Projects",
-                width: 1080,
-                height: 1920,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225632/Mustang_dejgga.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786222487/mustang_final_ci2ioi.webm"
-            },
-            {
-                id: "car-edit",
-                name: "Car Edit",
-                category: "Side Projects",
-                width: 1080,
-                height: 1920,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225628/Car_edit_wzbihz.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786223113/Dark_Thoughts_c70kdi.webm"
-            },
-            {
-                id: "f1-edit",
-                name: "F1 Edit",
-                category: "Side Projects",
-                width: 1920,
-                height: 1080,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225631/F1_zr6kro.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786222276/f1_mist_edit_sbaql1.webm"
-            },
-            {
-                id: "kafouros",
-                name: "Kafouros",
-                category: "Side Projects",
-                width: 1080,
-                height: 1920,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225632/Kafouros_1_sn2a0t.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786223047/kafouros2_ovqvob.webm"
-            },
-            {
-                id: "kafouros-2",
-                name: "Kafouros 2",
-                category: "Side Projects",
-                width: 1080,
-                height: 1920,
-                thumb: "https://res.cloudinary.com/mhg6b5ne/image/upload/v1786225631/Kafouros_2_rbjbfe.webp",
-                video: "https://res.cloudinary.com/mhg6b5ne/video/upload/v1786223041/kafouros_ifhhxn.webm"
-            }
-        ];
-
-        // --------------------------------------------------------------------------
-        // Hidden Projects
-        // Add or remove project IDs or Names here to control which projects appear
-        // behind the "Load More" button.
-        // Projects listed here are automatically moved from the default grid into
-        // Load More while strictly respecting their category.
-        // --------------------------------------------------------------------------
-        const hiddenProjects = [
-            "kafouros",
-            "kafouros-2"
-        ];
-        // ==========================================================================
-
-        // Utility to check if a project is hidden by default
-        function isProjectHidden(p) {
-            if (!hiddenProjects || !Array.isArray(hiddenProjects)) return false;
-            return hiddenProjects.some(hiddenItem => {
-                const str = String(hiddenItem).trim().toLowerCase();
-                return (p.id && p.id.toLowerCase() === str) || (p.name && p.name.toLowerCase() === str);
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const isTouchDevice = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-            let mIsMobile = window.innerWidth <= 768;
-
-            window.addEventListener('resize', () => { mIsMobile = window.innerWidth <= 768; });
-
-            document.getElementById('year').textContent = new Date().getFullYear();
-
-            // 1. Initialize Smooth Scrolling (Lenis)
-            const lenis = new Lenis({
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                smoothWheel: true,
-                touchMultiplier: 2,
-            });
-            
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-            
-            lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-            gsap.ticker.lagSmoothing(0);
-
-            // Scroll Progress Indicator Logic
-            const progressBar = document.getElementById('scrollProgressBar');
-            gsap.to(progressBar, {
-                width: '100%', ease: 'none',
-                scrollTrigger: { trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: true }
-            });
-
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetElement = document.querySelector(this.getAttribute('href'));
-                    if (targetElement) lenis.scrollTo(targetElement, { offset: -80 });
-                });
-            });
-
-            // 2. High-Performance Custom Cursor (Desktop Only)
-            const cursor = document.getElementById('cursor');
-            if (!prefersReducedMotion && !isTouchDevice) {
-                let mouseX = -100, mouseY = -100;
-                let cursorX = -100, cursorY = -100;
-
-                window.addEventListener('mousemove', (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-
-                const renderCursor = () => {
-                    cursorX += (mouseX - cursorX) * 0.75;
-                    cursorY += (mouseY - cursorY) * 0.75;
-                    cursor.style.transform = `translate(calc(${cursorX}px - 50%), calc(${cursorY}px - 50%))`;
-                    requestAnimationFrame(renderCursor);
-                };
-                requestAnimationFrame(renderCursor);
-
-                document.addEventListener('mouseover', (e) => {
-                    const target = e.target;
-                    if (target.closest('.project-card') || target.closest('.load-more-btn') || target.closest('.show-less-btn')) return; 
-                    if (target.closest('a') || target.closest('button') || target.closest('.hover-target')) cursor.classList.add('hover-active');
-                });
-
-                document.addEventListener('mouseout', (e) => {
-                    const target = e.target;
-                    if (target.closest('.project-card') || target.closest('.load-more-btn') || target.closest('.show-less-btn')) return;
-                    if (target.closest('a') || target.closest('button') || target.closest('.hover-target')) cursor.classList.remove('hover-active');
-                });
-            }
-
-            // 3. Render Portfolio Grid & Category Logic
-            const grid = document.getElementById('portfolioGrid');
-            const loadMoreContainer = document.getElementById('loadMoreContainer');
-            const loadMoreBtn = document.getElementById('loadMoreBtn');
-            const showLessBtn = document.getElementById('showLessBtn');
-            let currentFilteredProjects = [];
-            let hasAnimatedGrid = false;
-
-            function attachCardListeners() {
-                document.querySelectorAll('.project-card').forEach(card => {
-                    const index = parseInt(card.getAttribute('data-index'), 10);
-                    const type = card.getAttribute('data-type');
-                    
-                    card.addEventListener('click', (e) => { e.preventDefault(); openModal(index); });
-                    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(index); }});
-                    
-                    card.addEventListener('mouseenter', () => {
-                        if (isTouchDevice || mIsMobile) return; 
-                        if (cursor) {
-                            if (type === 'video') cursor.classList.add('hover-video');
-                            else cursor.classList.add('hover-active'); 
-                        }
-                        if (type === 'video') {
-                            const video = card.querySelector('video');
-                            if (video) {
-                                if (!video.getAttribute('src')) video.setAttribute('src', video.getAttribute('data-src'));
-                                if (video.paused) video.play().catch(() => {});
-                            }
-                        }
-                    });
-
-                    card.addEventListener('mouseleave', () => {
-                        if (isTouchDevice || mIsMobile) return; 
-                        if (cursor) { cursor.classList.remove('hover-video'); cursor.classList.remove('hover-active'); }
-                        if (type === 'video') {
-                            const video = card.querySelector('video');
-                            if (video && !video.paused) { video.pause(); video.currentTime = 0; }
-                        }
-                    });
-                });
-            }
-
-            function renderProjects(filter = "All") {
-                const categoryFiltered = filter === "All" ? projects : projects.filter(p => p.category === filter);
-                
-                // Partition into default visible and hidden projects while maintaining strict structure
-                const defaultProjects = categoryFiltered.filter(p => !isProjectHidden(p));
-                const hiddenCategoryProjects = categoryFiltered.filter(p => isProjectHidden(p));
-                
-                // Combine order so default projects come first, followed by hidden projects
-                currentFilteredProjects = [...defaultProjects, ...hiddenCategoryProjects];
-                
-                let htmlStr = currentFilteredProjects.map((p, index) => {
-                    const hiddenByDefault = isProjectHidden(p);
-                    const isImage = p.id === 'p2' || (p.video && p.video.match(/\.(webp|jpg|jpeg|png|gif)(\?.*)?$/i));
-                    const thumbHtml = p.thumb ? `<img src="${p.thumb}" alt="Thumbnail for ${p.name}" loading="lazy" decoding="async">` : '';
-                    const fallbackImgHtml = (isImage && !p.thumb) ? `<img src="${p.video}" alt="${p.name}" loading="lazy">` : '';
-                    
-                    let videoHtml = '';
-                    if (!isImage && p.video) {
-                        if (p.thumb) {
-                            videoHtml = `<video data-src="${p.video}" loop muted playsinline preload="none"></video>`;
-                        } else {
-                            videoHtml = `<video src="${p.video}#t=0.1" data-src="${p.video}" loop muted playsinline preload="metadata" style="opacity: 1;"></video>`;
-                        }
-                    }
-
-                    const hiddenClass = hiddenByDefault ? 'hidden-project is-hidden-by-default' : '';
-                    
-                    return `
-                        <div class="project-card hover-target ${hiddenClass} ${!isImage ? 'has-video' : ''}" role="listitem" tabindex="0" data-index="${index}" data-type="${isImage ? 'image' : 'video'}">
-                            <div class="project-media">
-                                ${thumbHtml}
-                                ${fallbackImgHtml}
-                                ${videoHtml}
-                            </div>
-                            <div class="project-info">
-                                <h3 class="project-title">${p.name}</h3>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-
-                grid.innerHTML = htmlStr;
-                attachCardListeners();
-
-                // Setup Load More / Show Less Visibility
-                if (hiddenCategoryProjects.length > 0) {
-                    loadMoreContainer.style.display = 'flex';
-                    loadMoreBtn.style.display = 'flex';
-                    showLessBtn.style.display = 'none';
-                } else {
-                    loadMoreContainer.style.display = 'none';
-                    loadMoreBtn.style.display = 'none';
-                    showLessBtn.style.display = 'none';
-                }
-
-                // Entrance Animation
-                if (!prefersReducedMotion) {
-                    if (!hasAnimatedGrid) {
-                        gsap.fromTo(grid.querySelectorAll('.project-card:not(.hidden-project)'), 
-                            { y: 50, opacity: 0 },
-                            { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: grid, start: "top 85%" } }
-                        );
-                        hasAnimatedGrid = true;
-                    } else {
-                        gsap.fromTo(grid.querySelectorAll('.project-card:not(.hidden-project)'), 
-                            { y: 30, opacity: 0 },
-                            { y: 0, opacity: 1, stagger: 0.05, duration: 0.5, ease: "power2.out", overwrite: true }
-                        );
-                    }
-                    ScrollTrigger.refresh();
-                }
-            }
-
-            // Bind Load More / Show Less Event Handlers
-            loadMoreBtn.addEventListener('click', () => {
-                const hiddenCards = grid.querySelectorAll('.is-hidden-by-default');
-                hiddenCards.forEach(card => card.classList.remove('hidden-project'));
-                
-                if (!prefersReducedMotion) {
-                    gsap.fromTo(hiddenCards, 
-                        { opacity: 0 }, 
-                        { opacity: 1, duration: 0.4, stagger: 0.04, ease: "power2.out" }
-                    );
-                }
-                
-                loadMoreBtn.style.display = 'none';
-                showLessBtn.style.display = 'flex';
-                if (!prefersReducedMotion) {
-                    gsap.fromTo(showLessBtn, { opacity: 0 }, { opacity: 1, duration: 0.3 });
-                }
-                
-                ScrollTrigger.refresh();
-            });
-
-            showLessBtn.addEventListener('click', () => {
-                const hiddenCards = grid.querySelectorAll('.is-hidden-by-default');
-
-                if (!prefersReducedMotion) {
-                    gsap.to(hiddenCards, {
-                        opacity: 0,
-                        duration: 0.3,
-                        stagger: {
-                            each: 0.03,
-                            from: "end"
-                        },
-                        ease: "power2.inOut",
-                        onComplete: () => {
-                            hiddenCards.forEach(card => card.classList.add('hidden-project'));
-                            showLessBtn.style.display = 'none';
-                            loadMoreBtn.style.display = 'flex';
-                            gsap.fromTo(loadMoreBtn, { opacity: 0 }, { opacity: 1, duration: 0.3 });
-                            ScrollTrigger.refresh();
-                        }
-                    });
-                } else {
-                    hiddenCards.forEach(card => card.classList.add('hidden-project'));
-                    showLessBtn.style.display = 'none';
-                    loadMoreBtn.style.display = 'flex';
-                    ScrollTrigger.refresh();
-                }
-            });
-
-            // Bind Custom Cursor events to grid controls
-            [loadMoreBtn, showLessBtn].forEach(btn => {
-                btn.addEventListener('mouseenter', () => { if(cursor && !isTouchDevice && !mIsMobile) cursor.classList.add('hover-active'); });
-                btn.addEventListener('mouseleave', () => { if(cursor && !isTouchDevice && !mIsMobile) cursor.classList.remove('hover-active'); });
-            });
-
-            // Initial render
-            renderProjects("All");
-
-            // Filter button event listeners
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    renderProjects(btn.getAttribute('data-filter'));
-                });
-            });
-
-            // 4. ScrollSpy - Active Navigation
-            const sectionBounds = [];
-            const navItems = document.querySelectorAll('.nav-item');
-            
-            const calculateBounds = () => {
-                sectionBounds.length = 0;
-                document.querySelectorAll('.hero, #about, #expertise, #results, #work, #contact').forEach(el => {
-                    sectionBounds.push({ id: el.classList.contains('hero') ? 'top' : el.id, top: el.getBoundingClientRect().top + window.scrollY, bottom: el.getBoundingClientRect().bottom + window.scrollY });
-                });
-            };
-
-            setTimeout(calculateBounds, 100);
-            window.addEventListener('load', calculateBounds);
-            window.addEventListener('resize', () => requestAnimationFrame(calculateBounds));
-
-            lenis.on('scroll', () => {
-                const scrollY = window.scrollY;
-                const viewportCenter = scrollY + (window.innerHeight * 0.4); 
-                let activeId = 'top';
-
-                if (Math.ceil(scrollY) >= document.documentElement.scrollHeight - window.innerHeight - 20) activeId = 'contact';
-                else {
-                    for (let sec of sectionBounds) {
-                        if (viewportCenter >= sec.top && viewportCenter <= sec.bottom) { activeId = sec.id; break; }
-                    }
-                }
-                navItems.forEach(link => {
-                    if (link.getAttribute('href') === `#${activeId}`) link.classList.add('active');
-                    else link.classList.remove('active');
-                });
-            });
-
-            // 5. Universal Modal Player
-            const modal = document.getElementById('videoModal');
-            const closeBtn = document.getElementById('closeModal');
-            
-            // Desktop Modal elements
-            const modalContainer = document.getElementById('modalVideoContainer');
-            const modalLoader = document.getElementById('modalLoader');
-            const prevBtn = document.getElementById('modalPrevBtn');
-            const nextBtn = document.getElementById('modalNextBtn');
-
-            let previouslyFocusedElement = null;
-            let currentVideoElement = null;
-            let currentModalIndex = 0;
-
-            window.openModal = (index) => {
-                previouslyFocusedElement = document.activeElement;
-                currentModalIndex = index;
-                
-                modal.classList.add('active');
-                lenis.stop();
-                if (cursor) { cursor.classList.remove('hover-video'); cursor.classList.remove('hover-active'); }
-
-                if (mIsMobile) initMobileModal(index);
-                else openDesktopModal(index);
-            };
-
-            closeBtn.addEventListener('click', () => {
-                modal.classList.remove('active');
-                lenis.start();
-                
-                if (mIsMobile) {
-                    const mMediaVid = document.getElementById('mMediaVid');
-                    if (mMediaVid) {
-                        mMediaVid.pause();
-                        mMediaVid.removeAttribute('src');
-                        mMediaVid.load();
-                    }
-                } else {
-                    if (currentVideoElement) { currentVideoElement.pause(); currentVideoElement.removeAttribute('src'); currentVideoElement.load(); currentVideoElement.remove(); currentVideoElement = null; }
-                    const img = modalContainer.querySelector('img'); if (img) img.remove();
-                    modalLoader.classList.remove('active');
-                }
-                if (previouslyFocusedElement) previouslyFocusedElement.focus();
-            });
-
-            // ==========================================================================
-            // DESKTOP MODAL LOGIC
-            // ==========================================================================
-            function openDesktopModal(index) {
-                const p = currentFilteredProjects[index];
-                const isImage = p.id === 'p2' || (p.video && p.video.match(/\.(webp|jpg|jpeg|png|gif)(\?.*)?$/i));
-                
-                if (currentVideoElement) { currentVideoElement.pause(); currentVideoElement.remove(); currentVideoElement = null; }
-                const existingImg = modalContainer.querySelector('img'); if (existingImg) existingImg.remove();
-                
-                modalLoader.classList.add('active');
-
-                if (!isImage) {
-                    const video = document.createElement('video');
-                    video.src = p.video; video.controls = true; video.playsInline = true; video.loop = true; video.preload = "auto";
-                    currentVideoElement = video;
-                    modalContainer.appendChild(video);
-
-                    video.addEventListener('playing', () => modalLoader.classList.remove('active'));
-                    const attemptAutoplay = () => {
-                        video.muted = false; 
-                        video.play().catch(() => { video.muted = true; video.play().catch(() => modalLoader.classList.remove('active')); });
-                    };
-                    video.addEventListener('loadedmetadata', attemptAutoplay, { once: true });
-                } else {
-                    const img = document.createElement('img');
-                    img.src = p.video; img.alt = "Preview";
-                    img.onload = () => modalLoader.classList.remove('active');
-                    modalContainer.appendChild(img);
-                }
-            }
-
-            const dShowPrev = () => { if(!mIsMobile){ currentModalIndex = (currentModalIndex - 1 + currentFilteredProjects.length) % currentFilteredProjects.length; openDesktopModal(currentModalIndex); }};
-            const dShowNext = () => { if(!mIsMobile){ currentModalIndex = (currentModalIndex + 1) % currentFilteredProjects.length; openDesktopModal(currentModalIndex); }};
-            prevBtn.addEventListener('click', dShowPrev);
-            nextBtn.addEventListener('click', dShowNext);
-
-            document.addEventListener('keydown', (e) => {
-                if (modal.classList.contains('active')) {
-                    if (e.key === 'Escape' || e.key.toLowerCase() === 'x') closeBtn.click();
-                    else if (!mIsMobile && e.key === 'ArrowLeft') dShowPrev();
-                    else if (!mIsMobile && e.key === 'ArrowRight') dShowNext();
-                }
-            });
-
-            // ==========================================================================
-            // MOBILE MODAL LOGIC
-            // ==========================================================================
-            function initMobileModal(index) {
-                currentModalIndex = index;
-                const p = currentFilteredProjects[index];
-                const isImage = p.id === 'p2' || (p.video && p.video.match(/\.(webp|jpg|jpeg|png|gif)(\?.*)?$/i));
-                
-                const imgEl = document.getElementById('mMediaImg');
-                const vidEl = document.getElementById('mMediaVid');
-                const loader = document.getElementById('mLoaderMobile');
-
-                loader.style.display = 'block';
-
-                if (isImage) {
-                    vidEl.pause();
-                    vidEl.style.display = 'none';
-                    vidEl.removeAttribute('src');
-                    vidEl.load();
-                    
-                    imgEl.src = p.video;
-                    imgEl.style.display = 'block';
-                    
-                    imgEl.onload = () => { loader.style.display = 'none'; };
-                    imgEl.onerror = () => { loader.style.display = 'none'; };
-                } else {
-                    imgEl.style.display = 'none';
-                    vidEl.style.display = 'block';
-
-                    vidEl.src = p.video;
-                    vidEl.muted = false;
-                    vidEl.volume = 1.0;
-                    
-                    const playPromise = vidEl.play();
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            loader.style.display = 'none';
-                        }).catch(() => {
-                            vidEl.muted = true;
-                            vidEl.play().then(() => {
-                                loader.style.display = 'none';
-                            }).catch(() => loader.style.display = 'none');
-                        });
-                    }
-                }
-            }
-
-            // 6. ScrollTrigger Animations
-            if (!prefersReducedMotion) {
-                gsap.to('.hero-title:not(.outline)', { y: -100, opacity: 0, scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-                gsap.to('.hero-title.outline', { y: 100, opacity: 0, scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-                
-                // Updated triggers for the separated cards
-                gsap.from('#about .about-card', { scrollTrigger: { trigger: '#about', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
-                gsap.from('.service-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' });
-                gsap.from('.results-wrapper', { scrollTrigger: { trigger: '#results', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
-                gsap.from('#about-me .about-card', { scrollTrigger: { trigger: '#about-me', start: 'top 85%' }, y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' });
-            }
-        });
-    </script>
+<div class="noise" aria-hidden="true"></div><div id="pb" aria-hidden="true"></div>
+<div class="cr" id="cr" aria-hidden="true"></div><div class="cd" id="cd" aria-hidden="true"></div>
+<div id="pre" aria-hidden="true">BILL.K FILMS<span id="pc">0</span></div>
+
+<nav class="nav" id="nav">
+<a href="#top" aria-label="Home"><img src="https://res.cloudinary.com/mhg6b5ne/image/upload/v1786281283/LOGO_cpdtvo.png" alt="Bill.K.Films logo"></a>
+<ul><li><a class="l" href="#about">About</a></li><li><a class="l" href="#expertise">Services</a></li><li><a class="l" href="#work">Work</a></li><li><a class="l ct" href="#contact">Contact</a></li></ul>
+</nav>
+
+<main>
+<header class="hero" id="top">
+<div class="hbg" aria-hidden="true"><video autoplay loop muted playsinline preload="metadata" src="https://assets.mixkit.co/videos/preview/mixkit-dj-playing-music-in-a-club-4332-large.mp4"></video></div>
+<h1 class="hl b" aria-label="Motion design and social media"><span class="r"><span class="w"><i>Motion</i></span><span class="w"><i>Design</i></span></span><span class="r"><span class="w"><i>&amp; Social</i></span><span class="w"><i>Media</i></span></span></h1>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="hl f" aria-hidden="true"><span class="r"><span class="w"><i>Motion</i></span><span class="w"><i>Design</i></span></span><span class="r"><span class="w"><i>&amp; Social</i></span><span class="w"><i>Media</i></span></span></div>
+<div class="hi"><p>High-impact promotion viral videos, animated event flyers, and visual storytelling tailored for the modern digital landscape. Crafted for retention, designed for energy.</p></div>
+</header>
+
+<div class="c"><div class="sts">
+<div><b data-n="11">11</b><small>projects delivered</small></div>
+<div><b data-n="3">3</b><small>published on TikTok</small></div>
+<div><b data-n="150" data-s="K+">150K+</b><small>organic views from those three</small></div>
+</div></div>
+
+<section id="about"><div class="c">
+<h2 class="t"><span class="w"><i>The Studio</i></span></h2>
+<p class="stm" id="stm" style="margin-top:clamp(2rem,5vw,4rem)">Bill.K Films is a creative studio with a simple mission: to transform your vision into reality through high-performing videos made for social media.</p>
+<div class="two"><p class="big">What is Bill.K Films?</p><div>
+<p>Founded in early 2026, Bill.K Films focuses on creating high-end promotional content for artists, businesses, and creators who want to stand out and connect with their audience online.</p>
+<p>So far, we’ve worked on 11 projects. While only 3 of them have been published on TikTok, those few projects alone have already reached over 150K+ views and traction on the platform, showing the potential of our work to help artists, businesses, and professionals get noticed online.</p></div></div>
+</div></section>
+
+<section id="expertise" style="padding-top:0"><div class="c">
+<div class="sh"><h2 class="t"><span class="w"><i>Our Services</i></span></h2>
+<p>Bill.K Films offers a variety of services, making it ideal for trappers, rappers, artists, DJs, creators, and business owners looking to elevate their content and reach a wider audience online. We don’t just create basic short-form content, we create high-end promo edits using premium visuals designed to grab people’s attention on the internet. Before starting a project, we analyze the artist’s or business’s style, vision, identity, and goals, incorporating these elements into a unique video that represents them and connects with their audience.</p></div>
+<ul class="sl">
+<li class="sv"><button class="sb" aria-expanded="false"><span class="st">Spotify Canvases</span><span class="si" aria-hidden="true">+</span></button><div class="sd"><div><p>High-impact animated Spotify canvases designed to turn static track artwork into looping, immersive visual experiences for your listeners.</p></div></div></li>
+<li class="sv"><button class="sb" aria-expanded="false"><span class="st">Lyric Videos</span><span class="si" aria-hidden="true">+</span></button><div class="sd"><div><p>High-end lyric videos featuring dynamic kinetic typography, fluid visual effects, and custom pacing built for maximum view retention.</p></div></div></li>
+<li class="sv"><button class="sb" aria-expanded="false"><span class="st">Artist Promos</span><span class="si" aria-hidden="true">+</span></button><div class="sd"><div><p>Tailored promotional videos for rappers, trappers, DJs, and artists designed to amplify your release and stand out on social media feeds.</p></div></div></li>
+<li class="sv"><button class="sb" aria-expanded="false"><span class="st">Animated Flyers</span><span class="si" aria-hidden="true">+</span></button><div class="sd"><div><p>Transforming static artwork and posters into vibrant motion graphics for club announcements, festival lineups, and event marketing.</p></div></div></li>
+<li class="sv"><button class="sb" aria-expanded="false"><span class="st">Storytelling</span><span class="si" aria-hidden="true">+</span></button><div class="sd"><div><p>Narrative-focused visual edits that highlight your artist identity, brand message, and personal journey to deeply connect with your audience.</p></div></div></li>
+<li class="sv"><button class="sb" aria-expanded="false"><span class="st">Club Recaps</span><span class="si" aria-hidden="true">+</span></button><div class="sd"><div><p>Fast-paced club promo edits and event recaps featuring rhythmic cuts, precision color grading, and high-energy sound design.</p></div></div></li>
+</ul></div></section>
+
+<section id="results" style="padding-top:0"><div class="c"><div class="rs">
+<div><span class="pill"><i></i>Currently viral!</span><h3>Saske Ores</h3><div class="tg">Lyrics Edit / Artist Promo</div>
+<p>Combining high-end visual effects with dynamic creative editing, this lyrics video achieved significant organic reach on TikTok. The project demonstrates how tailored visuals can capture attention and drive real-world engagement!</p></div>
+<!-- To change this video, swap the src URL below. -->
+<div class="ts"><div class="tf"><div class="in"><video src="https://res.cloudinary.com/mhg6b5ne/video/upload/v1787760807/Bts_Ores_Saske_vrgfh8.webm" autoplay loop muted playsinline></video></div></div></div>
+</div></div></section>
+
+<section id="work" style="padding-top:0"><div class="c">
+<div class="wh"><h2 class="t"><span class="w"><i>Portfolio</i></span></h2>
+<div><div class="fl" role="group" aria-label="Filter projects"><button class="fb on" data-f="All" aria-pressed="true">All</button><button class="fb" data-f="Artist Promo" aria-pressed="false">Artist Promo</button><button class="fb" data-f="Flyers" aria-pressed="false">Flyers</button><button class="fb" data-f="Side Projects" aria-pressed="false">Side Projects</button></div></div></div>
+<div class="wk"><ul class="rows" id="rows"></ul>
+<div class="stg" aria-hidden="true"><div class="ts" style="width:100%;display:grid;justify-items:center"><div class="tf" id="fr"><div class="in" id="fin"><img id="fi" alt=""><video id="fv" muted loop playsinline></video></div></div></div><p class="cap" id="cap"></p></div></div>
+</div></section>
+
+<section id="about-me" style="padding-top:0"><div class="c"><div class="two cre" style="margin:0">
+<h2 class="t"><span class="w"><i>The Creator</i></span></h2>
+<div><p class="big">My name is Βασίλης Κολλάρος. I’m an 18-year-old specialized video editor, born and raised in Kaisariani, Athens.</p>
+<p>The reason I created Bill.K Films is because I had seen so many talented artists fall behind, not because of their artistic talent, songs, or albums, but because they didn’t have the ability to reach the right audience on social media.</p>
+<p>Our mission is to transform your vision into reality by creating visuals and edits that capture attention, build recognition, and help your work get discovered on social media.</p></div>
+</div></div></section>
+</main>
+
+<footer id="contact"><div class="c">
+<h2 class="t"><span class="w"><i>Get In Touch</i></span></h2>
+<a class="mail mag" href="mailto:bill.k.films7@gmail.com" data-cur="Email">bill.k.films7@gmail.com</a>
+<div class="soc"><a href="https://www.instagram.com/bill.k.films" target="_blank" rel="noopener noreferrer"><b>Instagram</b>@bill.k.films</a><a href="https://www.tiktok.com/@bill.k.films?_r=1&amp;_t=ZN-99BdJsGxo6o" target="_blank" rel="noopener noreferrer"><b>TikTok</b>@bill.k.films</a><a href="tel:+306983697532"><b>Phone</b>+30 698 369 7532</a></div>
+<div class="cp">&copy; <span id="yr"></span> Bill.K.Films. All Rights Reserved.</div>
+</div></footer>
+
+<div class="md" id="md" role="dialog" aria-modal="true" aria-label="Project viewer" aria-hidden="true">
+<video id="mv" controls loop playsinline></video>
+<button class="mb" id="mx" aria-label="Close viewer">Close ✕</button>
+<button class="mb" id="mp" aria-label="Previous project">← Prev</button>
+<div class="mi"><b id="mt"></b><span id="mk"></span></div>
+<button class="mb" id="mn" aria-label="Next project">Next →</button>
+</div>
+
+<script>
+(()=>{
+const $=(s,c=document)=>c.querySelector(s),$$=(s,c=document)=>[...c.querySelectorAll(s)],H=document.documentElement;
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,FINE=matchMedia('(hover:hover) and (pointer:fine)').matches,G=!!window.gsap&&!!window.ScrollTrigger;
+if(G)H.classList.add('js');
+const C='https://res.cloudinary.com/mhg6b5ne/';
+const P=[
+['Janice STFU','Artist Promo',1,1,'image/upload/v1792953081/Janice_STFU_x6xtvc.webp','video/upload/v1792952094/Janice_STFU_Final_rkzmnm.webm'],
+['Saske Ores','Artist Promo',1,1,'image/upload/v1787668884/Saske_Ores_Thub_kvbi0f.webp','video/upload/v1787668883/Saske_Ores_f2gq14.webm'],
+['Trapper Promo','Artist Promo',1,1,'image/upload/v1786036516/Tony_Montana_Light_zhyiso.webp','video/upload/v1786036541/Tony_Montana_II_2026_lnqgfc.webm'],
+['Toquel Flyer','Flyers',4,5,'image/upload/v1786036516/Toquel_V22_wystxs.webp','video/upload/v1786036528/Toquel_V22_dpuuw0.webm'],
+['DJ Flyer','Flyers',4,5,'image/upload/v1786036519/DJ_SANDA_e7squm.webp','video/upload/v1786036664/DJ_Sanda_kp27zq.webm'],
+['Club Flyer','Flyers',4,5,'image/upload/v1786036519/JOJO_shznqv.webp','video/upload/v1786036604/JoJo_sme8it.webm'],
+['DJ Namar Flyer','Flyers',4,5,'image/upload/v1786036515/DJ_Namar_q0qgbe.webp','video/upload/v1786036605/DJ_Namar_u3p9ut.webm'],
+['Mustang Edit','Side Projects',9,16,'image/upload/v1786225632/Mustang_dejgga.webp','video/upload/v1786222487/mustang_final_ci2ioi.webm'],
+['Car Edit','Side Projects',9,16,'image/upload/v1786225628/Car_edit_wzbihz.webp','video/upload/v1786223113/Dark_Thoughts_c70kdi.webm'],
+['F1 Edit','Side Projects',16,9,'image/upload/v1786225631/F1_zr6kro.webp','video/upload/v1786222276/f1_mist_edit_sbaql1.webm'],
+['Kafouros','Side Projects',9,16,'image/upload/v1786225632/Kafouros_1_sn2a0t.webp','video/upload/v1786223047/kafouros2_ovqvob.webm'],
+['Kafouros 2','Side Projects',9,16,'image/upload/v1786225631/Kafouros_2_rbjbfe.webp','video/upload/v1786223041/kafouros_ifhhxn.webm']
+].map(([n,c,w,h,t,v])=>({n,c,ar:w/h,t:C+t,v:C+v}));
+const ALL=P.map((_,i)=>i);let vis=ALL.slice(),ml=ALL,lenis=null,act=-1;
+$('#yr').textContent=new Date().getFullYear();
+
+/* project index */
+$('#rows').innerHTML=P.map((p,i)=>`<li data-c="${p.c}"><button class="row" data-i="${i}" data-cur="View"><img class="rt" src="${p.t}" alt="" loading="lazy"><span class="rn">${p.n}</span><span class="rc">${p.c}</span></button></li>`).join('');
+const fr=$('#fr'),fv=$('#fv'),MQ=matchMedia('(max-width:900px)');
+function show(i,f){if(i==null||MQ.matches||(i==act&&!f))return;act=i;const p=P[i];fr.style.setProperty('--a',p.ar);$('#fi').src=p.t;fv.src=p.v;fv.play().catch(()=>{});$('#cap').textContent=p.n+' — '+p.c;
+if(G&&!RM)gsap.fromTo('#fin',{clipPath:'inset(0 0 100% 0)'},{clipPath:'inset(0 0 0% 0)',duration:.9,ease:'expo.out'})}
+$$('.row').forEach(b=>{const i=+b.dataset.i;b.onmouseenter=b.onfocus=()=>show(i);b.onclick=()=>openM(i,vis)});
+$$('.fb').forEach(b=>b.onclick=()=>{const f=b.dataset.f;vis=[];$$('.fb').forEach(x=>{x.classList.toggle('on',x==b);x.setAttribute('aria-pressed',x==b)});
+$$('#rows li').forEach((li,i)=>{const s=f=='All'||li.dataset.c==f;li.hidden=!s;if(s)vis.push(i)});show(vis[0],1);
+if(G&&!RM){gsap.from($$('#rows li:not([hidden])'),{y:36,opacity:0,stagger:.06,duration:.9,ease:'expo.out'});ScrollTrigger.refresh()}});
+/* playback: only what is on screen plays */
+let wv=false;
+new IntersectionObserver(([e])=>{wv=e.isIntersecting;if(MQ.matches)return;if(wv){act<0?show(vis[0]):fv.play().catch(()=>{})}else fv.pause()},{rootMargin:'200px'}).observe($('#work'));
+MQ.addEventListener&&MQ.addEventListener('change',()=>{if(MQ.matches)fv.pause();else if(wv)show(vis[0],1)});
+const rv=$('.rs video');if(RM)rv.pause();else new IntersectionObserver(([e])=>e.isIntersecting?rv.play().catch(()=>{}):rv.pause()).observe(rv);
+
+/* modal */
+const M=$('#md'),V=$('#mv');let back;
+const load=i=>{const p=P[i];V.muted=false;V.src=p.v;V.play().catch(()=>{});$('#mt').textContent=p.n;$('#mk').textContent=p.c;V.dataset.i=i};
+function openM(i,l){ml=l;load(i);M.classList.add('on');M.setAttribute('aria-hidden','false');back=document.activeElement;$('#mx').focus();lenis&&lenis.stop();fv.pause()}
+function closeM(){M.classList.remove('on');M.setAttribute('aria-hidden','true');V.pause();V.removeAttribute('src');V.load();lenis&&lenis.start();if(wv&&!MQ.matches)fv.play().catch(()=>{});back&&back.focus()}
+const step=d=>{const k=ml.indexOf(+V.dataset.i);load(ml[(k+d+ml.length)%ml.length])};
+$('#mx').onclick=closeM;$('#mp').onclick=()=>step(-1);$('#mn').onclick=()=>step(1);M.onclick=e=>{if(e.target==M)closeM()};
+addEventListener('keydown',e=>{if(!M.classList.contains('on'))return;
+if(e.key=='Escape')closeM();if(e.key=='ArrowRight')step(1);if(e.key=='ArrowLeft')step(-1);
+if(e.key=='Tab'){const f=$$('button',M),a=f[0],z=f[f.length-1],d=document.activeElement;if(e.shiftKey&&d==a){e.preventDefault();z.focus()}else if(!e.shiftKey&&d==z){e.preventDefault();a.focus()}}});
+
+/* services */
+const sv=$$('.sv'),opn=s=>sv.forEach(x=>{const o=x==s;x.classList.toggle('o',o);$('.sb',x).setAttribute('aria-expanded',o)});
+sv.forEach(s=>$('.sb',s).onclick=()=>opn(s));opn(sv[0]);
+
+if(!G)return;
+gsap.registerPlugin(ScrollTrigger);
+if(window.Lenis&&!RM){lenis=new Lenis({lerp:.09});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
+$$('a[href^="#"]').forEach(a=>a.onclick=e=>{const t=$(a.getAttribute('href'));if(!t)return;e.preventDefault();lenis?lenis.scrollTo(t):t.scrollIntoView({behavior:RM?'auto':'smooth'})});
+
+/* cursor: its state is always derived from the element under the pointer */
+const cr=$('#cr'),cd=$('#cd');let px=0,py=0,inWin=false,glH=false;
+function setCur(){if(!FINE)return;let l='',o=false,sm=false;
+if(inWin){const el=document.elementFromPoint(px,py);if(el&&el.id=='gl'){o=glH;l=glH?'Play':''}else{const t=el&&el.closest('[data-cur],a,button');if(t){l=t.dataset.cur||'';o=!!l;sm=!l}}}
+if(cr.dataset.l!==l)cr.dataset.l=l;cr.classList.toggle('on',o);cr.classList.toggle('sm',sm);cr.style.opacity=cd.style.opacity=inWin?1:0}
+if(FINE){H.classList.add('cur');const qx=gsap.quickTo(cr,'x',{duration:.45,ease:'power3'}),qy=gsap.quickTo(cr,'y',{duration:.45,ease:'power3'});let q=0;
+addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;inWin=true;cd.style.transform=`translate(${px}px,${py}px)`;qx(px);qy(py);if(!q)q=requestAnimationFrame(()=>{q=0;setCur()})},{passive:true});
+document.addEventListener('pointerout',e=>{if(!e.relatedTarget){inWin=false;setCur()}});
+addEventListener('blur',()=>{inWin=false;setCur()});addEventListener('scroll',setCur,{passive:true});
+setInterval(()=>{if(inWin&&!document.hidden)setCur()},200)}
+if(FINE){$$('.mag').forEach(el=>{const qx=gsap.quickTo(el,'x',{duration:.7,ease:'elastic.out(1,.5)'}),qy=gsap.quickTo(el,'y',{duration:.7,ease:'elastic.out(1,.5)'});
+el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();qx((e.clientX-r.left-r.width/2)*.22);qy((e.clientY-r.top-r.height/2)*.35)});el.addEventListener('pointerleave',()=>{qx(0);qy(0)})});
+$$('.ts').forEach(s=>{const el=$('.tf',s);gsap.set(el,{transformPerspective:1100});const rx=gsap.quickTo(el,'rotationX',{duration:.7,ease:'power3'}),ry=gsap.quickTo(el,'rotationY',{duration:.7,ease:'power3'});
+s.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;ry(x*16);rx(-y*16);el.style.setProperty('--mx',(x+.5)*100+'%');el.style.setProperty('--my',(y+.5)*100+'%')});
+s.addEventListener('pointerleave',()=>{rx(0);ry(0)})})}
+
+/* scroll furniture */
+gsap.to('#pb',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.2}});
+ScrollTrigger.create({start:0,end:'max',onUpdate:s=>$('#nav').classList.toggle('hide',s.direction==1&&s.scroll()>240)});
+$$('.t .w>i').forEach(i=>{gsap.set(i,{yPercent:105,opacity:1});ScrollTrigger.create({trigger:i.closest('.t'),start:'top 90%',once:true,onEnter:()=>gsap.to(i,{yPercent:0,duration:1.2,ease:'expo.out'})})});
+$$('[data-n]').forEach(el=>{const o={v:0},n=+el.dataset.n,s=el.dataset.s||'';if(RM)return;el.textContent='0'+s;ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:()=>gsap.to(o,{v:n,duration:1.8,ease:'expo.out',onUpdate:()=>el.textContent=Math.round(o.v)+s})})});
+const sm=$('#stm');sm.innerHTML=sm.textContent.trim().split(/\s+/).map(w=>`<span>${w}</span>`).join(' ');
+if(RM)gsap.set($$('span',sm),{opacity:1});else gsap.to($$('span',sm),{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:sm,start:'top 80%',end:'bottom 50%',scrub:true}});
+if(!RM){gsap.to('.hl.b',{yPercent:-9,ease:'none',scrollTrigger:{trigger:'.hero',scrub:true,start:'top top',end:'bottom top'}});gsap.to('.hl.f',{yPercent:-22,ease:'none',scrollTrigger:{trigger:'.hero',scrub:true,start:'top top',end:'bottom top'}})}
+
+/* hero: 3D reel */
+const hero=$('.hero'),st={k:RM?1:0},hv=$('.hbg video');let sp=0,mx=0,my=0,sx=0,sy=0,base=0,live=true,hov=-1,ring=null,R,S,cam,ray,mouse,tmp,lw=0,pick=()=>null;
+if(RM)hv.pause();
+/* visibility drives the loop (not scroll progress, which is 0 at the very top and used to freeze it) */
+new IntersectionObserver(([e])=>{live=e.isIntersecting;if(live){if(!RM)hv.play().catch(()=>{})}else{hv.pause();hov=-1;glH=false;setCur()}}).observe(hero);
+ScrollTrigger.create({trigger:hero,start:'top top',end:'bottom top',onUpdate:s=>sp=s.progress});
+/* phones: size the wider line (& Social Media) to the screen width; both lines keep the desktop layout */
+function fitHero(f){const w=innerWidth;if(!f&&w==lw)return;lw=w;if(w>700){hero.style.removeProperty('--fs');return}
+hero.style.setProperty('--fs','100px');const m=Math.max(...$$('.hl.b .r').map(x=>x.getBoundingClientRect().width));
+hero.style.setProperty('--fs',100*w*.92/m+'px')}
+fitHero(1);document.fonts&&document.fonts.ready.then(()=>fitHero(1));addEventListener('resize',()=>fitHero());
+try{
+const gl=$('#gl');
+R=new THREE.WebGLRenderer({canvas:gl,alpha:true,antialias:FINE});R.setPixelRatio(Math.min(devicePixelRatio,FINE?2:1.5));R.outputEncoding=THREE.sRGBEncoding;
+gl.addEventListener('webglcontextlost',e=>e.preventDefault());
+S=new THREE.Scene();S.fog=new THREE.Fog(0x050505,10,21);cam=new THREE.PerspectiveCamera(32,1,.1,60);ring=new THREE.Group();S.add(ring);
+ray=new THREE.Raycaster();mouse=new THREE.Vector2(9,9);tmp=new THREE.Vector3();
+const N=P.length;
+P.forEach((p,i)=>{const c=document.createElement('canvas');c.width=400;c.height=500;const x=c.getContext('2d'),g=x.createLinearGradient(0,0,400,500);g.addColorStop(0,'#2a0b18');g.addColorStop(1,'#071513');x.fillStyle=g;x.fillRect(0,0,400,500);x.fillStyle='#f4f4f4';x.font='58px Anton,Impact,sans-serif';x.fillText(p.n.toUpperCase(),22,468);
+const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=4;
+const im=new Image();im.crossOrigin='anonymous';im.onload=()=>{const s=Math.max(400/im.width,500/im.height);x.drawImage(im,(400-im.width*s)/2,(500-im.height*s)/2,im.width*s,im.height*s);t.needsUpdate=true};im.src=p.t;
+const m=new THREE.Mesh(new THREE.PlaneGeometry(2,2.5),new THREE.MeshBasicMaterial({map:t,side:THREE.DoubleSide,fog:true}));
+const a=i/N*Math.PI*2;m.userData={i,a,h:0};ring.add(m)});
+const fit=()=>{const w=hero.clientWidth,h=hero.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.position.set(0,1.1,w/h<.8?19:w/h<1.4?15:12.5);cam.lookAt(0,-.2,0);cam.updateProjectionMatrix()};
+fit();new ResizeObserver(fit).observe(hero);
+const aim=e=>{const r=gl.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1)};
+/* only front-facing frames can be hit; the frame already hovered keeps priority while the pointer is still on it */
+pick=force=>{ray.setFromCamera(mouse,cam);const hs=ray.intersectObjects(ring.children.filter(m=>tmp.setFromMatrixPosition(m.matrixWorld).z>.4));
+if(!force&&hov>-1){const c=hs.find(h=>h.object.userData.i==hov);if(c)return c}return hs[0]};
+hero.addEventListener('pointermove',e=>{mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1;aim(e)},{passive:true});
+hero.addEventListener('pointerleave',()=>{mouse.set(9,9);mx=my=0});
+addEventListener('scroll',()=>mouse.set(9,9),{passive:true});
+gl.addEventListener('click',e=>{aim(e);ring.updateMatrixWorld(true);const h=pick(true);if(h)openM(h.object.userData.i,ALL)});
+}catch(e){ring=null}
+const bx=gsap.quickSetter('.hl.b','x','px'),fx=gsap.quickSetter('.hl.f','x','px'),by=gsap.quickSetter('.hl.b','y','px'),fy=gsap.quickSetter('.hl.f','y','px');
+gsap.ticker.add(()=>{if(!live||document.hidden)return;
+sx+=(mx-sx)*.06;sy+=(my-sy)*.06;if(!RM){bx(-sx*16);fx(sx*22);by(-sy*8);fy(sy*12)}
+if(!ring)return;const t=performance.now()/1000;if(!RM)base+=.0014;
+const tgt=base+sp*Math.PI*1.3+sx*.32;ring.rotation.y+=((tgt-(1-st.k)*2.6)-ring.rotation.y)*.08;
+ring.rotation.x=.1+sy*.1;ring.rotation.z=.05-sx*.03;ring.scale.setScalar(.45+.55*st.k);ring.updateMatrixWorld(true);
+if(FINE){const h=pick(false),ni=h?h.object.userData.i:-1;if(ni!=hov){hov=ni;glH=ni>-1;setCur()}}
+/* hover is a smoothed 0..1 value that drives scale AND radial push together: no jumps, no flicker */
+ring.children.forEach(m=>{const u=m.userData;u.h+=((u.i==hov?1:0)-u.h)*.1;const k=1+u.h*.1;m.scale.setScalar(k);
+m.position.set(Math.sin(u.a)*4.9*k,RM?0:Math.sin(t*.8+u.i)*.1,Math.cos(u.a)*4.9*k);m.rotation.y=u.a});
+R.render(S,cam)});
+
+/* intro */
+const wd=$$('.hl .w>i'),hi=$$('.hi>*,.nav');
+const reveal=()=>{const p=$('#pre');if(p)p.remove();gsap.set(wd,{yPercent:0,opacity:1});st.k=1;lenis&&lenis.start()};
+if(RM)reveal();
+else{gsap.set(wd,{yPercent:105,opacity:1});lenis&&lenis.stop();const o={v:0};
+const tl=gsap.timeline({onComplete:()=>{const p=$('#pre');if(p)p.remove();lenis&&lenis.start()}})
+.to(o,{v:100,duration:1.1,ease:'power2.inOut',onUpdate:()=>$('#pc').textContent=Math.round(o.v)})
+.to('#pre',{clipPath:'inset(0 0 100% 0)',duration:1,ease:'expo.inOut'},'+=.1')
+.to(wd,{yPercent:0,duration:1.4,ease:'expo.out',stagger:.08},'-=.6')
+.to(st,{k:1,duration:2.4,ease:'expo.out'},'<')
+.from(hi,{opacity:0,y:24,duration:1.1,stagger:.1,ease:'expo.out',clearProps:'transform,opacity'},'-=1.4');
+setTimeout(()=>{if($('#pre')){tl.kill();reveal()}},7000)}
+})();
+</script>
 </body>
 </html>
