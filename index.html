@@ -95,7 +95,7 @@ section{padding:clamp(5rem,11vw,11rem) 0}
 .rows{list-style:none;border-top:1px solid #222}.rows li{border-bottom:1px solid #222}
 .row{display:flex;width:100%;align-items:center;gap:1.2rem;padding:1.05rem 0;transition:opacity .4s,transform .7s var(--ex)}
 .rn{font:400 clamp(1.9rem,4.3vw,4.2rem)/1.05 var(--hd);text-transform:uppercase;color:#6c6c74;transition:color .3s;flex:1}
-.rc{color:var(--mu);font-size:.85rem}.rt{display:none}
+.rc{color:var(--mu);font-size:.85rem}.pv{display:none}
 @media(hover:hover){.rows:hover .row{opacity:.3}.rows .row:hover{opacity:1;transform:translateX(1.2vw)}.row:hover .rn{color:var(--tx)}}.rows .row:focus-visible{opacity:1;transform:translateX(1.2vw)}.row:focus-visible .rn{color:var(--tx)}
 .stg{position:sticky;top:14vh;perspective:1200px;display:grid;justify-items:center}
 .stg .tf{width:min(100%,calc(min(66vh,34rem)*var(--a,.8)));aspect-ratio:var(--a,.8)}
@@ -119,8 +119,12 @@ footer .t{font-size:clamp(4rem,15vw,15rem)}
 @media(max-width:900px){
 .nav img{height:34px}.nav ul{font-size:.78rem;gap:.9rem}
 .two,.sh,.rs,.wk{grid-template-columns:1fr}.stg{display:none}
-.row{padding:.8rem 0}.rt{display:block;width:56px;height:56px;object-fit:cover;border-radius:4px}.rc{display:none}.rows:hover .row{opacity:1}#work .t .w{padding:.03em 0}
-.hl{font-size:var(--fs,clamp(4rem,12.4vw,15rem))}
+.rows li{padding-bottom:1.5rem}.row{padding:1rem 0 .7rem;align-items:baseline}.rc{font-size:.8rem}
+.pv{display:block;position:relative;aspect-ratio:var(--a);width:min(100%,calc(46svh*var(--a)));border-radius:6px;overflow:hidden;background:#111;-webkit-tap-highlight-color:transparent;transition:transform .5s var(--ex)}
+.pv:active{transform:scale(.98)}.pv img,.pv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pv video{opacity:0;transition:opacity .6s}.pv.on video{opacity:1}
+.pv em{position:absolute;left:.6rem;bottom:.6rem;font:600 .72rem/1 var(--bd);padding:.45rem .75rem;border-radius:99px;background:rgba(5,5,5,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.hl{font-size:var(--fs,19vw)}.hl .r{flex-direction:column;gap:0;align-items:center}
 .sts small{font-size:.75rem}.mi{display:none}}
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}}
 </style>
@@ -145,9 +149,9 @@ footer .t{font-size:clamp(4rem,15vw,15rem)}
 </header>
 
 <div class="c"><div class="sts">
-<div><b data-n="11">11</b><small>projects delivered</small></div>
-<div><b data-n="3">3</b><small>published on TikTok</small></div>
-<div><b data-n="150" data-s="K+">150K+</b><small>organic views from those three</small></div>
+<div><b data-n="13" id="stat-pd">13</b><small>projects delivered</small></div>
+<div><b data-n="7">7</b><small>published on socials</small></div>
+<div><b data-n="286" data-s="K+">286K+</b><small>organic views from those three</small></div>
 </div></div>
 
 <section id="about"><div class="c">
@@ -155,7 +159,7 @@ footer .t{font-size:clamp(4rem,15vw,15rem)}
 <p class="stm" id="stm" style="margin-top:clamp(2rem,5vw,4rem)">Bill.K Films is a creative studio with a simple mission: to transform your vision into reality through high-performing videos made for social media.</p>
 <div class="two"><p class="big">What is Bill.K Films?</p><div>
 <p>Founded in early 2026, Bill.K Films focuses on creating high-end promotional content for artists, businesses, and creators who want to stand out and connect with their audience online.</p>
-<p>So far, we’ve worked on 11 projects. While only 3 of them have been published on TikTok, those few projects alone have already reached over 150K+ views and traction on the platform, showing the potential of our work to help artists, businesses, and professionals get noticed online.</p></div></div>
+<p>So far, we’ve worked on 13 projects. While 7 of them have been published on socials, those projects alone have already reached over 286K+ views and traction on the platform, showing the potential of our work to help artists, businesses, and professionals get noticed online.</p></div></div>
 </div></section>
 
 <section id="expertise" style="padding-top:0"><div class="c">
@@ -200,7 +204,7 @@ footer .t{font-size:clamp(4rem,15vw,15rem)}
 </div></footer>
 
 <div class="md" id="md" role="dialog" aria-modal="true" aria-label="Project viewer" aria-hidden="true">
-<video id="mv" controls loop playsinline></video>
+<video id="mv" loop playsinline></video>
 <button class="mb" id="mx" aria-label="Close viewer">Close ✕</button>
 <button class="mb" id="mp" aria-label="Previous project">← Prev</button>
 <div class="mi"><b id="mt"></b><span id="mk"></span></div>
@@ -214,13 +218,17 @@ const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,FINE=matchMedia('
 if(G)H.classList.add('js');
 const C='https://res.cloudinary.com/mhg6b5ne/';
 const P=[
+/* Artist Promo — unchanged */
 ['Janice STFU','Artist Promo',1,1,'image/upload/v1792953081/Janice_STFU_x6xtvc.webp','video/upload/v1792952094/Janice_STFU_Final_rkzmnm.webm'],
 ['Saske Ores','Artist Promo',1,1,'image/upload/v1787668884/Saske_Ores_Thub_kvbi0f.webp','video/upload/v1787668883/Saske_Ores_f2gq14.webm'],
 ['Trapper Promo','Artist Promo',1,1,'image/upload/v1786036516/Tony_Montana_Light_zhyiso.webp','video/upload/v1786036541/Tony_Montana_II_2026_lnqgfc.webm'],
+/* Flyers — ordered: PW Halloween (9:16) → Toquel → DJ Namar → DJ → Club */
+['PW Halloween Flyer','Flyers',9,16,'image/upload/v1793137787/compressO-PW_Halloween_Flyer_Thubnail_p9ojn5.webp','video/upload/v1793137809/PW_Halloween_Flyer_vor1eo.webm'],
 ['Toquel Flyer','Flyers',4,5,'image/upload/v1786036516/Toquel_V22_wystxs.webp','video/upload/v1786036528/Toquel_V22_dpuuw0.webm'],
+['DJ Namar Flyer','Flyers',4,5,'image/upload/v1786036515/DJ_Namar_q0qgbe.webp','video/upload/v1786036605/DJ_Namar_u3p9ut.webm'],
 ['DJ Flyer','Flyers',4,5,'image/upload/v1786036519/DJ_SANDA_e7squm.webp','video/upload/v1786036664/DJ_Sanda_kp27zq.webm'],
 ['Club Flyer','Flyers',4,5,'image/upload/v1786036519/JOJO_shznqv.webp','video/upload/v1786036604/JoJo_sme8it.webm'],
-['DJ Namar Flyer','Flyers',4,5,'image/upload/v1786036515/DJ_Namar_q0qgbe.webp','video/upload/v1786036605/DJ_Namar_u3p9ut.webm'],
+/* Side Projects — unchanged */
 ['Mustang Edit','Side Projects',9,16,'image/upload/v1786225632/Mustang_dejgga.webp','video/upload/v1786222487/mustang_final_ci2ioi.webm'],
 ['Car Edit','Side Projects',9,16,'image/upload/v1786225628/Car_edit_wzbihz.webp','video/upload/v1786223113/Dark_Thoughts_c70kdi.webm'],
 ['F1 Edit','Side Projects',16,9,'image/upload/v1786225631/F1_zr6kro.webp','video/upload/v1786222276/f1_mist_edit_sbaql1.webm'],
@@ -228,14 +236,17 @@ const P=[
 ['Kafouros 2','Side Projects',9,16,'image/upload/v1786225631/Kafouros_2_rbjbfe.webp','video/upload/v1786223041/kafouros_ifhhxn.webm']
 ].map(([n,c,w,h,t,v])=>({n,c,ar:w/h,t:C+t,v:C+v}));
 const ALL=P.map((_,i)=>i);let vis=ALL.slice(),ml=ALL,lenis=null,act=-1;
+/* auto-update Projects Delivered from P.length */
+{const _el=$('#stat-pd');if(_el){_el.dataset.n=P.length;_el.textContent=P.length;}}
 $('#yr').textContent=new Date().getFullYear();
 
 /* project index */
-$('#rows').innerHTML=P.map((p,i)=>`<li data-c="${p.c}"><button class="row" data-i="${i}" data-cur="View"><img class="rt" src="${p.t}" alt="" loading="lazy"><span class="rn">${p.n}</span><span class="rc">${p.c}</span></button></li>`).join('');
+$('#rows').innerHTML=P.map((p,i)=>`<li data-c="${p.c}"><button class="row" data-i="${i}" data-cur="View"><span class="rn">${p.n}</span><span class="rc">${p.c}</span></button><button class="pv" data-i="${i}" style="--a:${p.ar}" aria-label="Open ${p.n} with sound"><img src="${p.t}" alt="" loading="lazy" decoding="async"><video muted loop playsinline preload="none" tabindex="-1"></video><em>Tap for sound</em></button></li>`).join('');
 const fr=$('#fr'),fv=$('#fv'),MQ=matchMedia('(max-width:900px)');
 function show(i,f){if(i==null||MQ.matches||(i==act&&!f))return;act=i;const p=P[i];fr.style.setProperty('--a',p.ar);$('#fi').src=p.t;fv.src=p.v;fv.play().catch(()=>{});$('#cap').textContent=p.n+' — '+p.c;
 if(G&&!RM)gsap.fromTo('#fin',{clipPath:'inset(0 0 100% 0)'},{clipPath:'inset(0 0 0% 0)',duration:.9,ease:'expo.out'})}
 $$('.row').forEach(b=>{const i=+b.dataset.i;b.onmouseenter=b.onfocus=()=>show(i);b.onclick=()=>openM(i,vis)});
+$$('.pv').forEach(b=>b.onclick=()=>openM(+b.dataset.i,vis));
 $$('.fb').forEach(b=>b.onclick=()=>{const f=b.dataset.f;vis=[];$$('.fb').forEach(x=>{x.classList.toggle('on',x==b);x.setAttribute('aria-pressed',x==b)});
 $$('#rows li').forEach((li,i)=>{const s=f=='All'||li.dataset.c==f;li.hidden=!s;if(s)vis.push(i)});show(vis[0],1);
 if(G&&!RM){gsap.from($$('#rows li:not([hidden])'),{y:36,opacity:0,stagger:.06,duration:.9,ease:'expo.out'});ScrollTrigger.refresh()}});
@@ -244,12 +255,65 @@ let wv=false;
 new IntersectionObserver(([e])=>{wv=e.isIntersecting;if(MQ.matches)return;if(wv){act<0?show(vis[0]):fv.play().catch(()=>{})}else fv.pause()},{rootMargin:'200px'}).observe($('#work'));
 MQ.addEventListener&&MQ.addEventListener('change',()=>{if(MQ.matches)fv.pause();else if(wv)show(vis[0],1)});
 const rv=$('.rs video');if(RM)rv.pause();else new IntersectionObserver(([e])=>e.isIntersecting?rv.play().catch(()=>{}):rv.pause()).observe(rv);
+const on=new Set();let hold=false;
+const run=v=>{if(hold||RM||document.hidden)return;v.muted=true;if(!v.getAttribute('src'))v.src=P[+v.parentNode.dataset.i].v;v.play().then(()=>v.parentNode.classList.add('on')).catch(()=>{})};
+function pvHold(b){hold=b;on.forEach(v=>b?v.pause():run(v))}
+if(!RM){const io=new IntersectionObserver(es=>es.forEach(e=>{const v=$('video',e.target);if(e.intersectionRatio>=.45){on.add(v);run(v)}else{on.delete(v);v.pause()}}),{threshold:[0,.45]}),
+fr2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)return;const v=$('video',e.target);v.pause();if(v.getAttribute('src')){v.removeAttribute('src');v.load()}e.target.classList.remove('on')}),{rootMargin:'120% 0px'});
+$$('.pv').forEach(p=>{io.observe(p);fr2.observe(p)});
+document.addEventListener('visibilitychange',()=>on.forEach(v=>document.hidden?v.pause():run(v)))}
 
 /* modal */
 const M=$('#md'),V=$('#mv');let back;
-const load=i=>{const p=P[i];V.muted=false;V.src=p.v;V.play().catch(()=>{});$('#mt').textContent=p.n;$('#mk').textContent=p.c;V.dataset.i=i};
-function openM(i,l){ml=l;load(i);M.classList.add('on');M.setAttribute('aria-hidden','false');back=document.activeElement;$('#mx').focus();lenis&&lenis.stop();fv.pause()}
-function closeM(){M.classList.remove('on');M.setAttribute('aria-hidden','true');V.pause();V.removeAttribute('src');V.load();lenis&&lenis.start();if(wv&&!MQ.matches)fv.play().catch(()=>{});back&&back.focus()}
+
+/* Fix 3 — Robust audio-on-open: try unmuted play (user just tapped = gesture exists);
+   if the browser still blocks it, fall back to muted so video at least runs. */
+const load=i=>{
+  const p=P[i];
+  V.src=p.v;
+  V.muted=false;
+  const pr=V.play();
+  if(pr!==undefined){pr.catch(()=>{if(V.paused){V.muted=true;V.play().catch(()=>{});}});}
+  $('#mt').textContent=p.n;$('#mk').textContent=p.c;V.dataset.i=i;
+};
+
+/* Fix 4 — Mobile controls: hidden when modal opens, revealed on tap, auto-hidden after 3 s.
+   Desktop keeps persistent native controls. Touch detection uses the most reliable media query. */
+const isTouch=matchMedia('(hover:none) and (pointer:coarse)');
+let ctrlTimer;
+const showCtrl=()=>{
+  V.controls=true;
+  clearTimeout(ctrlTimer);
+  ctrlTimer=setTimeout(()=>{V.controls=false;},3000);
+};
+/* Desktop: set controls once, permanently */
+if(!isTouch.matches)V.controls=true;
+/* Mobile: tap the video area to toggle controls without affecting playback */
+V.addEventListener('click',e=>{
+  if(!isTouch.matches)return; /* desktop — native controls handle their own clicks */
+  e.stopPropagation();        /* prevent the backdrop-click → closeM path */
+  if(V.controls){clearTimeout(ctrlTimer);V.controls=false;}
+  else{showCtrl();}
+});
+
+function openM(i,l){
+  ml=l;load(i);
+  M.classList.add('on');M.setAttribute('aria-hidden','false');
+  back=document.activeElement;$('#mx').focus();
+  lenis&&lenis.stop();pvHold(true);fv.pause();
+  /* Reset controls state: hidden on touch, visible on desktop */
+  if(isTouch.matches){clearTimeout(ctrlTimer);V.controls=false;}
+}
+function closeM(){
+  M.classList.remove('on');M.setAttribute('aria-hidden','true');
+  V.pause();V.removeAttribute('src');V.load();
+  clearTimeout(ctrlTimer);
+  /* Restore correct controls state for next open */
+  V.controls=!isTouch.matches;
+  lenis&&lenis.start();pvHold(false);
+  if(wv&&!MQ.matches)fv.play().catch(()=>{});
+  back&&back.focus();
+}
 const step=d=>{const k=ml.indexOf(+V.dataset.i);load(ml[(k+d+ml.length)%ml.length])};
 $('#mx').onclick=closeM;$('#mp').onclick=()=>step(-1);$('#mn').onclick=()=>step(1);M.onclick=e=>{if(e.target==M)closeM()};
 addEventListener('keydown',e=>{if(!M.classList.contains('on'))return;
@@ -296,10 +360,10 @@ if(RM)hv.pause();
 /* visibility drives the loop (not scroll progress, which is 0 at the very top and used to freeze it) */
 new IntersectionObserver(([e])=>{live=e.isIntersecting;if(live){if(!RM)hv.play().catch(()=>{})}else{hv.pause();hov=-1;glH=false;setCur()}}).observe(hero);
 ScrollTrigger.create({trigger:hero,start:'top top',end:'bottom top',onUpdate:s=>sp=s.progress});
-/* phones: size the wider line (& Social Media) to the screen width; both lines keep the desktop layout */
-function fitHero(f){const w=innerWidth;if(!f&&w==lw)return;lw=w;if(w>700){hero.style.removeProperty('--fs');return}
-hero.style.setProperty('--fs','100px');const m=Math.max(...$$('.hl.b .r').map(x=>x.getBoundingClientRect().width));
-hero.style.setProperty('--fs',100*w*.92/m+'px')}
+/* mobile headline: size the widest word to the screen width */
+function fitHero(f){const w=innerWidth;if(!f&&w==lw)return;lw=w;if(w>900){hero.style.removeProperty('--fs');return}
+hero.style.setProperty('--fs','100px');const m=Math.max(...$$('.hl.b .w').map(x=>x.getBoundingClientRect().width));
+hero.style.setProperty('--fs',Math.min(100*w*.88/m,innerHeight*.17,w*.3)+'px')}
 fitHero(1);document.fonts&&document.fonts.ready.then(()=>fitHero(1));addEventListener('resize',()=>fitHero());
 try{
 const gl=$('#gl');
